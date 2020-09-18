@@ -1,4 +1,4 @@
-<?php include_once "config/config.php"; ?>
+<?php require_once 'globals.php'; ?>
 <?php include_once "includes/header.php"; ?>
 <!-- start banner Area -->
 <section class="banner-area relative" id="home">
@@ -29,39 +29,157 @@
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.
 							</p>
 							<ul class="time-list">
-								<li class="d-flex justify-content-between">
-									<span>Monday-Friday</span>
-									<span>08.00 am - 10.00 pm</span>
-								</li>
-								<li class="d-flex justify-content-between">
-									<span>Saturday</span>
-									<span>08.00 am - 10.00 pm</span>
-								</li>
-								<li class="d-flex justify-content-between">
-									<span>Sunday</span>
-									<span>08.00 am - 10.00 pm</span>
-								</li>																
+								<?php $service_hours = get_data('hours_servicings','where hours_servicing_is_active = 1','day,time');?>
+								<?php foreach ($service_hours as $item) : ?>
+									<li class="d-flex justify-content-between">
+										<span><?=$item['hours_servicing_day']?></span>
+										<span><?=$item['hours_servicing_time']?></span>
+									</li>
+								<?php endforeach; ?>
 							</ul>
 						</div>
-						<div class="col-lg-6 col-md-6 appointment-right pt-60 pb-60">
-							<form class="form-wrap" action="#">
-								<h3 class="pb-20 text-center mb-30">Book an Appointment</h3>		
-								<input type="text" class="form-control" name="name" placeholder="Patient Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'" >
-								<input type="text" class="form-control" name="phone" placeholder="Phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'" >
-								<input type="email" class="form-control" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" >
-								<input id="datepicker1" name="dop" class="dates form-control"  placeholder="Date of Birth" type="text">   
-								<div class="form-select" id="service-select">
-									<select>
-										<option data-display="">Disease Type</option>
-										<option value="1">Type One</option>
-										<option value="2">Type Two</option>
-										<option value="3">Type Three</option>
-										<option value="4">Type Four</option>
-									</select>
+						<?php if (isset($_POST['send'])) {
+							//echo '<pre>';
+							//print_r($_POST);
+							//echo '</pre>';
+							decomposed_array($_POST);
+							//print_r($_POST);
+							// Validation
+							// appointment_name: required, string, max:50
+							$input = 'appointment_name';
+							if (! is_required($$input)) {
+								$errors[$input] = 'required';
+							} elseif (! is_string_modified($$input)) {
+								$errors[$input] = 'Must be String';
+							} elseif (! is_not_more_than($$input, MAXAPPOINTMENT_NAMELENGTH)) {
+								$errors[$input] = 'Must be less than '.MAXAPPOINTMENT_NAMELENGTH.' Characters';
+							}
+							// appointment_phone: required, string, max:20
+							$input = 'appointment_phone';
+							if (! is_required($$input)) {
+								$errors[$input] = 'required';
+							} elseif (! is_string_modified($$input)) {
+								$errors[$input] = 'Must be String';
+							} elseif (! is_not_more_than($$input, MAXAPPOINTMENT_PHONELENGTH)) {
+								$errors[$input] = 'Must be less than '.MAXAPPOINTMENT_PHONELENGTH.' Characters';
+							}
+							// appointment_email: required, string, max:100, email
+							$input = 'appointment_email';
+							if (! is_required($$input)) {
+								$errors[$input] = 'required';
+							} elseif (! is_string_modified($$input)) {
+								$errors[$input] = 'Must be String';
+							} elseif (! is_not_more_than($$input, MAXAPPOINTMENT_EMAIL_LENGTH)) {
+								$errors[$input] = 'Must be less than '.MAXAPPOINTMENT_EMAIL_LENGTH.' Characters';
+							} elseif (! is_email($$input)) {
+								$errors[$input] = 'Must be Email!!';
+							}
+							// appointment_date_birth: required
+							$input = 'appointment_date_birth';
+							if (! is_required($$input)) {
+								$errors[$input] = 'required';
+							}
+							// service_id: required
+							$input = 'service_id';
+							if (! is_required($$input)) {
+								$errors[$input] = 'Please Select Service ';
+							}
+                            $check_id = get_data_by_id('services', $$input, 'id');
+                            if (empty($check_id)) {
+                                $errors[$input] = 'Invalide Country Data';
+							}
+							// country_id: required
+							$input = 'country_id';
+							if (! is_required($$input)) {
+								$errors[$input] = 'Please Select Country ';
+							}
+							$check_id = get_data_by_id('countries', $$input, 'id');
+                            if (empty($check_id)) {
+                                $errors[$input] = 'Invalide Country Data';
+                            }
+							// state_id: required
+							$input = 'state_id';
+							if (! is_required($$input)) {
+								$errors[$input] = 'Please Select State ';
+							}
+							$check_id = get_data_by_id('states', $$input, 'id');
+                            if (empty($check_id)) {
+                                $errors[$input] = 'Invalide Country Data';
+                            }
+							// city_id: required
+							$input = 'city_id';
+							if (! is_required($$input)) {
+								$errors[$input] = 'Please Select City ';
+							}
+							$check_id = get_data_by_id('cities', $$input, 'id');
+                            if (empty($check_id)) {
+                                $errors[$input] = 'Invalide Country Data';
+                            }
+							//echo '<pre>';
+							//print_r($errors);
+							//echo '</pre>';
+						}
+						?>
+						<div class="col-lg-6 col-md-6 appointment-right pt-60 pb-60" id="appointment">
+							<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+								<h3 class="pb-20 text-center mb-30">Book an Appointment</h3>
+								<div class="form-group">		
+									<input type="text" class="form-control" name="appointment_name" placeholder = 'Patient Name' ><?=getError('appointment_name')?>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" name="appointment_phone" placeholder = 'Phone' ><?=getError('appointment_phone');?>
+								</div>
+								<div class="form-group">
+									<input type="email" class="form-control" name="appointment_email" placeholder = 'Email Address' ><?=getError('appointment_email')?>
+								</div>
+								<div class="form-group">
+									<input id="datepicker1" name="appointment_date_birth" class="dates form-control"  placeholder="Date of Birth" type="text"><?=getError('appointment_date_birth')?>
+								</div>
+								<div class="form-group">
+									<select class="form-control" id="services" name="service_id">
+									<?php $services = get_data('services', 'where service_is_active = 1', 'name,id'); ?>
+										<option value=''>Service Name</option>
+										<?php foreach ($services as $service) : ?>
+										<option value="<?=$service['service_id']?>"><?=$service['service_name']?></option>
+										<?php endforeach; ?>
+									</select><?=getError('service_id')?>
+								</div>
+								<div class="form-group" id="doct">
+									<select class="form-control" id="doctors" name="doctor_id">
+									<?php $doctors = get_data('doctors', 'where doctor_is_active = 1', 'name,id'); ?>
+										<option value=''>Doctor Name</option>
+										<?php foreach ($doctors as $doctor) : ?>
+										<option value="<?=$doctor['doctor_id']?>"><?=ucfirst($doctor['doctor_name'])?></option>
+										<?php endforeach; ?>
+									</select><?=getError('doctor_id')?>
 								</div>	
-								<input id="datepicker2" class="dates form-control"  placeholder="appointment Date" type="text">  
-								<textarea name="messege" class="" rows="5" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"></textarea> 
-								<button class="primary-btn text-uppercase">Confirm Booking</button>
+								<div class="form-group" id="country-select">
+								<?php $countries = get_data('countries', 'where country_is_active = 1', 'id,name');?>
+									<select class="form-control" id="countries" name="country_id">
+										<option value='' selected> Country Name</option>
+										<?php foreach ($countries as $country) : ?>
+										<option value="<?=$country['country_id']?>"><?=ucfirst($country['country_name'])?></option>
+										<?php endforeach; ?>
+									</select><?=getError('country_id')?>
+								</div>	
+								<div class="form-group" id="state-select">
+									<select id="states" class="form-control" name="state_id">
+										<option value='' selected> State Name</option>
+									</select><?=getError('state_id')?>
+								</div>
+								<div class="form-group" id="city-select">
+									<select class="form-control" id="cities" name='city_id'>
+										<option value='' selected> City Name</option>
+									</select><?=getError('city_id')?>
+								</div>	
+								<div class="form-group">
+									<input id="datepicker2" class="dates form-control"  placeholder="appointment Date" type="text" name="appoiontment_date">  
+								</div>
+								<textarea name="appoiontment_messege" class="form-control" rows="5" placeholder = 'Messege'></textarea> 
+								<br>
+								<div class="form-group">
+									<button class="primary-btn text-uppercase" type="submit" name="send">Confirm Booking</button>
+								</div>
 							</form>
 						</div>
 					</div>
@@ -81,48 +199,21 @@
 		                </div>
 		            </div>
 					<div class="row">
+					<?php $features = get_data('features', 'where feature_is_active = 1', 'name,icon,description'); ?>
+					<?php foreach ($features as $feature) : ?>
 						<div class="col-lg-3 col-md-6">
 							<div class="single-facilities">
-								<span class="lnr lnr-rocket"></span>
-								<a href="#"><h4>24/7 Emergency</h4></a>
-								<p>
-									inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct women face higher conduct.
-								</p>
+								<span class="<?=$feature['feature_icon']?>"></span>
+								<a href="#"><h4><?=$feature['feature_name']?></h4></a>
+								<p><?=$feature['feature_description']?></p>
 							</div>
 						</div>
-						<div class="col-lg-3 col-md-6">
-							<div class="single-facilities">
-								<span class="lnr lnr-heart"></span>
-								<a href="#"><h4>24/7 Emergency</h4></a>
-								<p>
-									inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct women face higher conduct.
-								</p>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6">
-							<div class="single-facilities">
-								<span class="lnr lnr-bug"></span>
-								<a href="#"><h4>Intensive Care</h4></a>
-								<p>
-									inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct women face higher conduct.
-								</p>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6">
-							<div class="single-facilities">
-								<span class="lnr lnr-users"></span>
-								<a href="#"><h4>Family Planning</h4></a>
-								<p>
-									inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct women face higher conduct.
-								</p>
-							</div>
-						</div>																		
+					<?php endforeach; ?>
 					</div>
 				</div>	
 			</section>
 			<!-- End facilities Area -->
-			
-
+		
 			<!-- Start offered-service Area -->
 			<section class="offered-service-area section-gap">
 				<div class="container">
@@ -136,7 +227,7 @@
 								<div class="col-lg-6 col-md-6">
 									<div class="single-service">
 										<div class="thumb">
-											<img class="img-fluid" src="img/s1.jpg" alt="">		
+											<img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/s1.jpg" alt="">		
 										</div>
 										<a href="#">
 											<h4 class="text-white">Cardiac Treatment</h4>
@@ -149,7 +240,7 @@
 								<div class="col-lg-6 col-md-6">
 									<div class="single-service">
 										<div class="thumb">
-											<img class="img-fluid" src="img/s2.jpg" alt="">		
+											<img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/s2.jpg" alt="">		
 										</div>
 										<a href="#">
 											<h4 class="text-white">Routine Checkup</h4>
@@ -166,13 +257,10 @@
 								<div class="overlay overlay-bg"></div>
 								<h3 class="relative text-white">Departments</h3>
 								<ul class="relative dep-list">
-									<li><a href="#">Pediatric Diagnosis</a></li>
-									<li><a href="#">Outpatient Rehabilitation</a></li>
-									<li><a href="#">Laryngological Functions</a></li>
-									<li><a href="#">Ophthalmology Unit</a></li>
-									<li><a href="#">Cardiac Unit</a></li>
-									<li><a href="#">Outpatient Surgery</a></li>
-									<li><a href="#">Gynaecological Wings</a></li>
+									<?php $departments = get_data('departments', 'where department_is_active = 1', 'id,name', '7'); ?>
+									<?php foreach ($departments as $department) : ?>
+										<li><a href="<?=WEBSITE_URL.'?department='.$department['department_id']?>"><?=$department['department_name']?></a></li>
+									<?php endforeach; ?>
 								</ul>
 								<a class="viewall-btn" href="#">View all Department</a>			
 							</div>	
@@ -196,7 +284,7 @@
 		            <div class="row justify-content-center d-flex align-items-center">
 		                <div class="col-lg-3 col-md-6 single-team">
 		                    <div class="thumb">
-		                        <img class="img-fluid" src="img/t1.jpg" alt="">
+		                        <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t1.jpg" alt="">
 		                        <div class="align-items-end justify-content-center d-flex">
 									<div class="social-links">
 										<a href="#"><i class="fa fa-facebook"></i></a>
@@ -213,7 +301,7 @@
 		                </div>
 		                <div class="col-lg-3 col-md-6 single-team">
 		                    <div class="thumb">
-		                        <img class="img-fluid" src="img/t2.jpg" alt="">
+		                        <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t2.jpg" alt="">
 		                        <div class="align-items-end justify-content-center d-flex">
 									<div class="social-links">
 										<a href="#"><i class="fa fa-facebook"></i></a>
@@ -230,7 +318,7 @@
 		                </div>
 		                <div class="col-lg-3 col-md-6 single-team">
 		                    <div class="thumb">
-		                        <img class="img-fluid" src="img/t3.jpg" alt="">
+		                        <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t3.jpg" alt="">
 		                        <div class="align-items-end justify-content-center d-flex">
 									<div class="social-links">
 										<a href="#"><i class="fa fa-facebook"></i></a>
@@ -247,7 +335,7 @@
 		                </div>
 		                <div class="col-lg-3 col-md-6 single-team">
 		                    <div class="thumb">
-		                        <img class="img-fluid" src="img/t4.jpg" alt="">
+		                        <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t4.jpg" alt="">
 		                        <div class="align-items-end justify-content-center d-flex">
 									<div class="social-links">
 										<a href="#"><i class="fa fa-facebook"></i></a>
@@ -282,12 +370,12 @@
 					<div class="row feedback-contents justify-content-center align-items-center">
 						<div class="col-lg-6 feedback-left relative d-flex justify-content-center align-items-center">
 							<div class="overlay overlay-bg"></div>
-							<a class="play-btn" href="https://www.youtube.com/watch?v=ARA0AxrnHdM"><img class="img-fluid" src="img/play-btn.png" alt=""></a>
+							<a class="play-btn" href="https://www.youtube.com/watch?v=ARA0AxrnHdM"><img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/play-btn.png" alt=""></a>
 						</div>
 						<div class="col-lg-6 feedback-right">
 							<div class="active-review-carusel">
 								<div class="single-feedback-carusel">
-									<img src="img/r1.png" alt="">
+									<img src="<?=WEBSITE_URL?>assets/frontend/img/r1.png" alt="">
 									<div class="title d-flex flex-row">
 										<h4 class="text-white pb-10">Fannie Rowe</h4>
 										<div class="star">
@@ -303,7 +391,7 @@
 									</p>
 								</div>
 								<div class="single-feedback-carusel">
-									<img src="img/r1.png" alt="">
+									<img src="<?=WEBSITE_URL?>assets/frontend/img/r1.png" alt="">
 									<div class="title d-flex flex-row">
 										<h4 class="text-white pb-10">Fannie Rowe</h4>
 										<div class="star">
@@ -319,7 +407,7 @@
 									</p>
 								</div>
 								<div class="single-feedback-carusel">
-									<img src="img/r1.png" alt="">
+									<img src="<?=WEBSITE_URL?>assets/frontend/img/r1.png" alt="">
 									<div class="title d-flex flex-row">
 										<h4 class="text-white pb-10">Fannie Rowe</h4>
 										<div class="star">
@@ -347,107 +435,23 @@
 		            <div class="brand-wrap section-gap">
 		                <div class="row align-items-center active-brand-carusel justify-content-start no-gutters">
 		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="img/l1.png" alt=""></a>
+		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l1.png" alt=""></a>
 		                    </div>
 		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="img/l2.png" alt=""></a>
+		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l2.png" alt=""></a>
 		                    </div>
 		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="img/l3.png" alt=""></a>
+		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l3.png" alt=""></a>
 		                    </div>
 		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="img/l4.png" alt=""></a>
+		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l4.png" alt=""></a>
 		                    </div>
 		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="img/l5.png" alt=""></a>
+		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l5.png" alt=""></a>
 		                    </div>
 		                </div>
 		            </div>
 		        </div>
 		    </section>
 		    <!-- End brands Area -->
-	
-			<!-- Start recent-blog Area -->
-			<section class="recent-blog-area section-gap">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-md-7 pb-60 header-text">
-							<h1>Our Recent Blogs</h1>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.
-							</p>
-						</div>
-					</div>
-					<div class="row">	
-						<div class="single-recent-blog col-lg-4 col-md-4">
-							<div class="thumb">
-								<img class="f-img img-fluid mx-auto" src="img/b1.jpg" alt="">	
-							</div>						
-							<a href="#">
-								<h4>Portable Fashion for women</h4>
-							</a>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip exea.
-							</p>
-							<div class="bottom d-flex justify-content-between align-items-center flex-wrap">
-								<div>
-									<img class="img-fluid" src="img/user.png" alt="">
-									<a href="#"><span>Mark Wiens</span></a>
-								</div>
-								<div class="meta">
-									13th Dec
-									<span class="lnr lnr-heart"></span> 15
-									<span class="lnr lnr-bubble"></span> 04
-								</div>
-							</div>								
-						</div>
-						<div class="single-recent-blog col-lg-4 col-md-4">
-							<div class="thumb">
-								<img class="f-img img-fluid mx-auto" src="img/b2.jpg" alt="">	
-							</div>						
-							<a href="#">
-								<h4>Summer ware are coming</h4>
-							</a>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip exea.
-							</p>
-							<div class="bottom d-flex justify-content-between align-items-center flex-wrap">
-								<div>
-									<img class="img-fluid" src="img/user.png" alt="">
-									<a href="#"><span>Mark Wiens</span></a>
-								</div>
-								<div class="meta">
-									13th Dec
-									<span class="lnr lnr-heart"></span> 15
-									<span class="lnr lnr-bubble"></span> 04
-								</div>
-							</div>								
-						</div>
-						<div class="single-recent-blog col-lg-4 col-md-4">
-							<div class="thumb">
-								<img class="f-img img-fluid mx-auto" src="img/b3.jpg" alt="">	
-							</div>						
-							<a href="#">
-								<h4>Summer ware are coming</h4>
-							</a>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip exea.
-							</p>
-							<div class="bottom d-flex justify-content-between align-items-center flex-wrap">
-								<div>
-									<img class="img-fluid" src="img/user.png" alt="">
-									<a href="#"><span>Mark Wiens</span></a>
-								</div>
-								<div class="meta">
-									13th Dec
-									<span class="lnr lnr-heart"></span> 15
-									<span class="lnr lnr-bubble"></span> 04
-								</div>
-							</div>								
-						</div>																
-					</div>
-				</div>	
-			</section>
-			<!-- end recent-blog Area -->	
-
 			<?php include_once "includes/footer.php"; ?>

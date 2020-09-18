@@ -4,7 +4,7 @@ $connection = mysqli_connect(DB_SERVERNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 /**
  * 
  */
-function get_data(string $table_name, string $where = '', string $columns = '*'): array
+function get_data(string $table_name, string $where = '', string $columns = '*', $limit = ''): array
 {
     global $connection;
     $columns = strip_tags($columns);
@@ -13,7 +13,13 @@ function get_data(string $table_name, string $where = '', string $columns = '*')
         $columns = get_columns_name($table_name, $columns);
     }
     $where = strip_tags($where);
-    $sql = sprintf("SELECT %s FROM `%s` %s", $columns, $table_name, $where);
+    if (! empty($limit)) {
+        $limit = (int) $limit;
+        $sql = sprintf("SELECT %s FROM `%s` %s LIMIT %d", $columns, $table_name, $where, $limit);
+    } else {
+        $sql = sprintf("SELECT %s FROM `%s` %s", $columns, $table_name, $where);
+    }
+//    return $sql;
     $result = @mysqli_query($connection, $sql);
     if (!$result) {
         return array();
@@ -115,5 +121,21 @@ function get_columns_name(string $table_name, string $columns): string
         $data .= "`".get_column_name($table_name)."_$column`,";
     }
     $data = trim($data, ',');
+    return $data;
+}
+
+
+
+
+function medical_get_all(string $table): array
+{
+    global $connection;
+    $data = array();
+    $table = strip_tags($table);
+    $sql = "SELECT * FROM `{$table}`";
+    $result = mysqli_query($connection, $sql);
+    while($row = mysqli_fetch_assoc($result)) {
+        array_push($data,$row);
+    }
     return $data;
 }

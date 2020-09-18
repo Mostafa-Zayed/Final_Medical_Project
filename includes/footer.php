@@ -1,4 +1,4 @@
-<!-- start footer Area -->		
+sc<!-- start footer Area -->		
 			<footer class="footer-area section-gap">
 				<div class="container">
 					<div class="row">
@@ -77,5 +77,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			<script src="<?=WEBSITE_URL;?>assets/frontend/js/owl.carousel.min.js"></script>									
 			<script src="<?=WEBSITE_URL;?>assets/frontend/js/mail-script.js"></script>	
 			<script src="<?=WEBSITE_URL;?>assets/frontend/js/main.js"></script>	
+			<script src="<?=WEBSITE_URL;?>assets/frontend/js/custom.js"></script>
 		</body>
 	</html>

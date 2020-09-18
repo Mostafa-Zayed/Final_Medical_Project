@@ -3,7 +3,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'countries/add.php'?>"> Add Countries</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'countries/add.php'?>"> Add Country</a></h4>
             <br>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -14,19 +14,21 @@
                                 <h2>New Country</h2>
                             </div>
                             <br>
-                            
                             <?php if (isset($_POST['submit'])) {
                                 decomposed_array($_POST);
                                 // Validation
                                 // country_name: required, string, max:30
-                                if (! is_required($country_name)) {
-                                    $errors['country_name'] = 'required';
-                                } elseif (! is_string_modified($country_name)) {
-                                    $errors['country_name'] = 'Must be String';
-                                } elseif (! is_not_more_than($country_name, MAXCOUNTRYLENGTH)) {
-                                    $errors['country_name'] = 'Must be less than '.MAXCOUNTRYLENGTH;
-                                } elseif (! is_belongs_to($country_is_active)) {
-                                    $errors['country_is_active'] = 'Invalid Active Data';
+                                $input = 'country_name';
+                                if (! is_required($$input)) {
+                                    $errors[$input] = 'required';
+                                } elseif (! is_string_modified($$input)) {
+                                    $errors[$input] = 'Must be String';
+                                } elseif (! is_not_more_than($$input, MAX_COUNTRY_NAME_LENGTH)) {
+                                    $errors[$input] = 'Must be less than '.MAX_COUNTRY_NAME_LENGTH.' Characters';
+                                } 
+                                $input = 'country_is_active';
+                                if (! is_belongs_to($$input, array(0,1))) {
+                                    $errors[$input] = 'Invalid Active Data';
                                 }
                                 if (empty($errors)) {
                                     $data = array(
@@ -35,7 +37,7 @@
                                     );
                                     $restult = insert_into_table('countries', $data);
                                     if ($restult) {
-                                        echo 'Data inserted Succ';
+                                        echo '<div class="alert alert-success">Data inserted Succ</div>';
                                     } else {
                                         echo 'Error';
                                     }

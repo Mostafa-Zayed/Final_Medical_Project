@@ -3,7 +3,7 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'states/view.php'?>">States</a><a href="<?=ADMIN_URL.'countries/add.php';?>" class="btn btn-primary pull-right">ADD State</a></h4>
+                    <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'states/view.php'?>">States</a><a href="<?=ADMIN_URL.'states/add.php';?>" class="btn btn-primary pull-right">ADD State</a></h4>
                     <br>
                     <div class="col-lg-12">
                     <div class="panel panel-primary">
@@ -24,15 +24,14 @@
                                     </thead>
                                     <tbody>
                                     <?php $rows = get_data('states'); ?>
-                                    <?php //print_r($rows); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
                                             <td><?=$row['state_id']?></td>
                                             <td><?=ucfirst($row['state_name'])?></td>
                                             <td><?=($row['state_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
                                             <td><?=$row['country_id']?></td>
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                                            <td><a href="<?=ADMIN_URL.'states/edit.php?state_id='.$row['state_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'states/delete.php?state_id='.$row['state_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>

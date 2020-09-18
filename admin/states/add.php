@@ -24,8 +24,8 @@
                                     $errors[$input] = 'required';
                                 } elseif (! is_string_modified($$input)) {
                                     $errors[$input] = 'Must be String';
-                                } elseif (! is_not_more_than($$input, MAXSTATELENGTH)) {
-                                    $errors[$input] = 'Must be less than '.MAXSTATELENGTH;
+                                } elseif (! is_not_more_than($$input, MAX_STATE_NAME_LENGTH)) {
+                                    $errors[$input] = 'Must be less than '.MAX_STATE_NAME_LENGTH.' Characters';
                                 } 
                                 $data[$input] = $$input;
                                 // state_is_active
@@ -41,15 +41,11 @@
                                 if (empty($check_id)) {
                                     $errors[$input] = 'Invalide Country Data';
                                 }
+                                $data[$input] = $$input;
                                 if (empty($errors)) {
-                                    $data = array(
-                                        'state_name' => $state_name,
-                                        'state_is_active' => $state_is_active,
-                                        'country_id' => $country_id
-                                    );
                                     $restult = insert_into_table('states', $data);
                                     if ($restult) {
-                                        echo 'Data inserted Succ';
+                                        echo '<div class="alert alert-success">Data inserted Succ</div>';
                                     } else {
                                         echo 'Error';
                                     }

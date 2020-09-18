@@ -6,7 +6,7 @@
 * @param string $input
 * @return string
 */
-function prepare_input(string $input): string
+function prepare_input( $input): string
 {
 	return trim(htmlspecialchars($input));
 }

@@ -41,6 +41,7 @@ mysqli_query($connection,$sql);
 $sql = "create table if not exists `pages` (
     `page_id` integer unsigned not null primary key auto_increment,
     `page_name` varchar(20) not null,
+    `page_link` varchar(20) ,
     `page_is_active` enum('1','0') not null default '1'
 )";
 
@@ -71,6 +72,7 @@ $sql = "create table if not exists `services` (
     `service_id` integer(11) unsigned not null primary key auto_increment,
     `service_name` varchar(100) not null,
     `service_type` int(11) unsigned not null,
+    `service_has_doctor` enum('1','0') not null default '0',
     `service_is_active` enum('1','0') not null default '1',
     constraint foreign key(service_type) references service_types(service_type_id)
 )";
@@ -91,7 +93,7 @@ $sql = "create table if not exists `states` (
     `state_id` int(11) unsigned not null primary key auto_increment,
     `state_name` varchar(30) not null,
     `country_id` int(11) unsigned not null,
-    `country_is_active` enum('1','0') not null default '1',
+    `state_is_active` enum('1','0') not null default '1',
     constraint fk_countries_country_id foreign key(country_id) references countries(country_id)
 )";
 
@@ -112,8 +114,8 @@ mysqli_query($connection,$sql);
 $sql = "create table if not exists `departments` (
     `department_id` integer(11) unsigned not null primary key auto_increment,
     `department_name` varchar(50) not null,
-    `department_image` varchar(255) not null,
-    `department_description` varchar(255) not null,
+    `department_image` varchar(255),
+    `department_description` varchar(255),
     `department_is_active` enum('1','0') not null default '1'
 )";
 
@@ -130,7 +132,7 @@ $sql = "create table if not exists `doctors` (
     `doctor_twitter` varchar(255) not null,
     `doctor_instgram` varchar(255) not null,
     `department_id` int(11) unsigned not null,
-    `doctor_is_show` enum('1','0') not null default '0',
+    `doctor_is_active` enum('1','0') not null default '1',
     constraint fk_departmens_department_id foreign key(department_id) references departments(department_id)
 )";
 
@@ -143,7 +145,7 @@ $sql = "create table if not exists `appointments` (
     `appointment_email` varchar(100) not null,
     `appointment_phone` varchar(20) not null,
     `appointment_date` varchar(255) not null,
-    `appointment_birth_date` varchar(255) not null,
+    `appointment_date_birth` varchar(255) not null,
     `appointment_message` text,
     `appointment_is_confirmed` enum('1','0') default '0',
     `service_id` int(11) unsigned not null,

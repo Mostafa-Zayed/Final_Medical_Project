@@ -12,4 +12,17 @@ if (! function_exists('create_sidebar'))
         }
         return $items;
     }
+
+    function decomposed_settings(array $data) 
+    {
+        $count = count($data);
+        $resource = array();
+        foreach ($data as $key => $value){
+            foreach($value as $key2 => $value2){
+                $key = $value['setting_name'];
+                $resource[$key] = $value['setting_value'];
+            }
+        }
+        return $resource;
+    }
 }

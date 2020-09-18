@@ -2,19 +2,23 @@
 // Array Of Errors
 $errors = array();
 $fixed = array();
-$length_constants['country'] = 30;
-$length_constants['state'] = 30;
+$length_constants['country_name'] = 30;
+$length_constants['state_name'] = 30;
 $length_constants['email'] = 100;
 $length_constants['password'] = 255;
-$length_constants['cityname'] = 100;
+$length_constants['city_name'] = 100;
 $length_constants['pagename'] = 50;
 $length_constants['sliderheading'] = 60;
+$length_constants['appointment_name'] = 50;
+$length_constants['appointment_phone'] = 20;
+$length_constants['appointment_email_'] = 100;
 //$length_constants['country'] = 30;
 //$length_constants['country'] = 30;
 
 foreach ($length_constants as $key => $value) {
-	defined(strtoupper('max'.$key.'length')) || define(strtoupper('max'.$key.'length'), $value);
+	defined(strtoupper('max_'.$key.'_length')) || define(strtoupper('max_'.$key.'_length'), $value);
 }
+//echo MAX_STATE_NAME_LENGTH;
 // Constant Of MaxEmaillength
 //defined('MAXEMAILLENGTH') || define('MAXEMAILLENGTH',100);
 
@@ -25,13 +29,13 @@ foreach ($length_constants as $key => $value) {
 //defined('MAXCITYNAMELENGTH') || define('MAXCITYNAMELENGTH',100);
 
 // Constant Of MaxORDERNameLength
-defined('MAXORDERNAMELENGTH') || define('MAXORDERNAMELENGTH',255);
+//defined('MAXORDERNAMELENGTH') || define('MAXORDERNAMELENGTH',255);
 
 // Constant Of MaxPhoneLength
-defined('MAXPHONELENGTH') || define('MAXPHONELENGTH',20);
+//defined('MAXPHONELENGTH') || define('MAXPHONELENGTH',20);
 
 // Constant Of MaxCountrylength
-defined('MAXCOUNTRYLENGTH') || define('MAXEMAILLENGTH',30);
+//defined('MAXCOUNTRYLENGTH') || define('MAXEMAILLENGTH',30);
 
 /**
 * This Function To Check if The Value Email Or Not

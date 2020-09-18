@@ -23,13 +23,12 @@
                                     </thead>
                                     <tbody>
                                     <?php $rows = get_data('countries'); ?>
-                                    <?php //print_r($rows); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
                                             <td><?=$row['country_id']?></td>
                                             <td><?=ucfirst($row['country_name'])?></td>
                                             <td><?=($row['country_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'countries/edit.php?country_id='.$row['country_id']?>" class="btn btn-primary">Edit</a></td>
                                             <td><a href="#" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>

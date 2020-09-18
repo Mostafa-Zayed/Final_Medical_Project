@@ -24,15 +24,14 @@
                                     </thead>
                                     <tbody>
                                     <?php $rows = get_data('cities'); ?>
-                                    <?php //print_r($rows); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
                                             <td><?=$row['city_id']?></td>
                                             <td><?=ucfirst($row['city_name'])?></td>
                                             <td><?=($row['city_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
                                             <td><?=$row['state_id']?></td>
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                                            <td><a href="<?=ADMIN_URL.'cities/edit.php?city_id='.$row['city_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'cities/delete.php?city_id='.$row['city_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>

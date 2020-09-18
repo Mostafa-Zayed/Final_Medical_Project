@@ -1,29 +1,8 @@
+<?php $pages = get_data('pages','where page_is_active = 1','name,link'); ?>
 <nav id="nav-menu-container">
-			        <ul class="nav-menu">
-			          <li><a href="index.html">Home</a></li>
-			          <li><a href="about.html">About</a></li>
-			          <li><a href="features.html">Features</a></li>
-			          <li><a href="doctors.html">Doctors</a></li>
-			          <li><a href="departments.html">Departments</a></li>
-			          <!--<li class="menu-has-children"><a href="">Blog</a>
-			            <ul>
-			              <li><a href="blog-home.html">Blog Home</a></li>
-			              <li><a href="blog-single.html">Blog Single</a></li>
-			            </ul>
-			          </li>	
-			          <li class="menu-has-children"><a href="">Pages</a>
-			            <ul>
-			            	  <li><a href="elements.html">Elements</a></li>
-			            	  <li><a href="#">Item One</a></li>
-			            	  <li><a href="#">Item Two</a></li>
-					          <li class="menu-has-children"><a href="">Level 2 </a>
-					            <ul>
-					              <li><a href="#">Item One</a></li>
-					              <li><a href="#">Item Two</a></li>
-					            </ul>
-					          </li>					                		
-			            </ul>
-			          </li>					          					          		    -->      
-			          <li><a href="contact.html">Contact</a></li>
-			        </ul>
-			      </nav><!-- #nav-menu-container -->		    		
+	<ul class="nav-menu">
+		<?php foreach ($pages as $page) : ?>
+			<li><a href="<?=WEBSITE_URL?><?=(! empty($page['page_link'])) ? $page['page_link'] : $page['page_name'];?>.php"><?=$page['page_name']?></a></li>
+		<?php endforeach; ?>
+	</ul>
+</nav><!-- #nav-menu-container -->		    		

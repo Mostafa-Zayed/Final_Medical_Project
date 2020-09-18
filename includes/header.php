@@ -1,3 +1,7 @@
+<?php 
+	$settings = get_data('settings','where setting_is_active = 1','name,value');
+	$settings = decomposed_settings($settings);
+?>
 	<!DOCTYPE html>
 	<html lang="zxx" class="no-js">
 	<head>
@@ -30,6 +34,9 @@
 			<link rel="stylesheet" href="<?=WEBSITE_URL;?>assets/frontend/css/owl.carousel.css">			
 			<link rel="stylesheet" href="<?=WEBSITE_URL;?>assets/frontend/css/jquery-ui.css">			
 			<link rel="stylesheet" href="<?=WEBSITE_URL;?>assets/frontend/css/main.css">
+			<style>
+				div#doct{display:none;}
+			</style>
 		</head>
 		<body>	
 		  <header id="header">
@@ -37,11 +44,11 @@
 	  			<div class="container">
 			  		<div class="row align-items-center">
 			  			<div class="col-lg-6 col-sm-6 col-4 header-top-left">
-			  				<a href="tel:+9530123654896"><span class="lnr lnr-phone-handset"></span> <span class="text"><span class="text">+953 012 3654 896</span></span></a>
-				  			<a href="mailto:support@colorlib.com"><span class="lnr lnr-envelope"></span> <span class="text"><span class="text">support@colorlib.com</span></span></a>			
+			  				<a href="tel:+9530123654896"><span class="lnr lnr-phone-handset"></span> <span class="text"><span class="text"><?=(! empty($settings['phone'])) ? $settings['phone'] : ''?></span></span></a>
+				  			<a href="mailto:support@colorlib.com"><span class="lnr lnr-envelope"></span> <span class="text"><span class="text"><?=(! empty($settings['email'])) ? $settings['email'] : ''?></span></span></a>			
 			  			</div>
 			  			<div class="col-lg-6 col-sm-6 col-8 header-top-right">
-							<a href="#" class="primary-btn text-uppercase">Book Appointment</a>
+							<a href="#appointment" class="primary-btn text-uppercase">Book Appointment</a>
 			  			</div>
 			  		</div>			  					
 	  			</div>
@@ -49,7 +56,7 @@
 		    <div class="container main-menu">
 		    	<div class="row align-items-center justify-content-between d-flex">
 			      <div id="logo">
-			        <a href="index.html"><img src="<?=WEBSITE_URL;?>public/assets/img/logo.png" alt="" title="" /></a>
+			        <a href="<?=WEBSITE_URL?>index.php"><img src="<?=WEBSITE_URL;?>assets/frontend/img/logo.png" alt="" title="" /></a>
 			      </div>
 			      <?php include_once "includes/navbar.php"; ?>
 		    	</div>
