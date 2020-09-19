@@ -7,7 +7,13 @@ $length_constants['state_name'] = 30;
 $length_constants['email'] = 100;
 $length_constants['password'] = 255;
 $length_constants['city_name'] = 100;
-$length_constants['pagename'] = 50;
+$length_constants['page_name'] = 20;
+$length_constants['page_link'] = 20;
+$length_constants['service_type_name'] = 30;
+$length_constants['department_name'] = 50;
+$length_constants['brand_name'] = 20;
+$length_constants['feature_name'] = 50;
+$length_constants['feature_icon'] = 50;
 $length_constants['sliderheading'] = 60;
 $length_constants['appointment_name'] = 50;
 $length_constants['appointment_phone'] = 20;
@@ -116,19 +122,39 @@ function is_belongs_to($value, array $data): bool
 
 function image_validation(array $resource, string $mimes, int $file_max_size)
 {
-    $file_name = basename($resource['imagefile']['name']);
+    global $errors;
+    global $input;
+    $file_name = basename($resource[$input]['name']);
     $extension = strtolower(substr($file_name, strrpos($file_name, '.') + 1));
     $types = explode( ',', $mimes);
     foreach($types as $key => $value) {
         $types[$key] = trim($value, ' ');
     }
-    if(! in_array($extension, $types) && $resource['imagefile']['type'] !== 'image/'.$extension) {
-        $errors['type'] = 'type error';
+    if(! in_array($extension, $types) && $resource[$input]['type'] !== 'image/'.$extension) {
+        $errors['file_type'] = '<b color="red">Error : </b>Type Of Image Not Allow ';
     }
     $file_size = ($file_max_size * 1024) * 1024 ;
-    if ($resource['imagefile']['size'] > $file_size) {
-        $errors['file_size'] = 'size eerror';
+    if ($resource[$input]['size'] > $file_size) {
+        $errors['file_size'] = '<b> Error : </b> Image Size Must Less Than '.$file_max_size.' Mb';
     }
     
 }   
+
+function uploade_image(array $resource, string $uploade_dir)
+{
+    global $errors;
+    global $input;
+    if (! isset($errors['file_type']) && ! isset($errors['file_size'])) {
+        $tmp_image = $resource[$input]['tmp_name'];
+        $image_name = basename($resource[$input]['name']);
+        $uploade_dir = 'uploads'.DS.$uploade_dir.DS;
+        if (move_uploaded_file($tmp_image, ROOT.$uploade_dir.$image_name)) {
+            return 'Image Uploaded Succefuly';
+        } else {
+            $errors['image'] = 'Image Not Uploaded Succfuly';
+        }
+    } else {
+        return '<br>Erro : </br> Image Not Uploaded Succefuly';
+    }
+}
 ?>

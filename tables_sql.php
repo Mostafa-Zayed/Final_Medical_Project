@@ -70,7 +70,7 @@ mysqli_query($connection,$sql);
 // Services Table
 $sql = "create table if not exists `services` (
     `service_id` integer(11) unsigned not null primary key auto_increment,
-    `service_name` varchar(100) not null,
+    `service_name` varchar(30) not null,
     `service_type` int(11) unsigned not null,
     `service_has_doctor` enum('1','0') not null default '0',
     `service_is_active` enum('1','0') not null default '1',
@@ -132,7 +132,7 @@ $sql = "create table if not exists `doctors` (
     `doctor_twitter` varchar(255) not null,
     `doctor_instgram` varchar(255) not null,
     `department_id` int(11) unsigned not null,
-    `doctor_is_active` enum('1','0') not null default '1',
+    `doctor_is_show` enum('1','0') not null default '1',
     constraint fk_departmens_department_id foreign key(department_id) references departments(department_id)
 )";
 
@@ -176,9 +176,9 @@ mysqli_query($connection,$sql);
 $sql = "create table if not exists `features` (
     `feature_id` int(11) unsigned not null primary key auto_increment,
     `feature_name` varchar(50) not null,
-    `feature_icon` varchar(300) not null,
+    `feature_icon` varchar(50) not null,
     `feature_description` text not null,
-    `feature_is_acitve` enum('1','0') not null default '1'
+    `feature_is_active` enum('1','0') not null default '1'
 )";
 
 mysqli_query($connection,$sql);

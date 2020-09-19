@@ -23,14 +23,13 @@
                                     </thead>
                                     <tbody>
                                     <?php $rows = get_data('service_types'); ?>
-                                    <?php //print_r($rows); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
                                             <td><?=$row['service_type_id']?></td>
                                             <td><?=ucfirst($row['service_type_name'])?></td>
                                             <td><?=($row['service_type_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                                            <td><a href="<?=ADMIN_URL.'service_types/edit.php?type_id='.$row['service_type_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'service_types/delete.php?type_id='.$row['service_type_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>

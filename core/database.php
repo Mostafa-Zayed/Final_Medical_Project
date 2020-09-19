@@ -19,7 +19,7 @@ function get_data(string $table_name, string $where = '', string $columns = '*',
     } else {
         $sql = sprintf("SELECT %s FROM `%s` %s", $columns, $table_name, $where);
     }
-//    return $sql;
+    //return $sql;
     $result = @mysqli_query($connection, $sql);
     if (!$result) {
         return array();
@@ -42,6 +42,7 @@ function get_data_by_id(string $table_name, int $id, $columns = '*'): array
     return get_data($table_name, $id, $columns);    
 }
 
+function get_data_by_column(){}
 /**
  * 
  */

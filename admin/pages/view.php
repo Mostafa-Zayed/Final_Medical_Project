@@ -17,20 +17,21 @@
                                     <thead>
                                         <th>ID</th>
                                         <th>NAME</th>
+                                        <th>LINK</th>
                                         <th>ACTIVE</th>
                                         <th>EDIT</th>
                                         <th>DELETE</th>
                                     </thead>
                                     <tbody>
                                     <?php $rows = get_data('pages'); ?>
-                                    <?php //print_r($rows); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
                                             <td><?=$row['page_id']?></td>
                                             <td><?=ucfirst($row['page_name'])?></td>
+                                            <td><?=$row['page_link']?></td>
                                             <td><?=($row['page_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                                            <td><a href="<?=ADMIN_URL.'pages/edit.php?page_id='.$row['page_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'pages/delete.php?page_id='.$row['page_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>

@@ -16,7 +16,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <th>ID</th>
-                                        <td><?=(isset($row['doctor_image']))? $row['doctor_image'] : 'No Image';?></td>
+                                        <th>IMAGE</th>
                                         <th>NAME</th>
                                         <th>DEPARTMENT</th>
                                         <th>PHONE</th>
@@ -27,18 +27,29 @@
                                     </thead>
                                     <tbody>
                                     <?php $rows = get_data('doctors'); ?>
-                                    <?php //print_r($rows); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
                                             <td><?=$row['doctor_id']?></td>
-                                            <td><?=(isset($row['doctor_image']))? $row['doctor_image'] : 'No Image';?></td>
+                                            <td><?php 
+                                            if (isset($row['doctor_image'])) {
+                                                echo '<img src="'.WEBSITE_URL.'uploads'.DS.'doctors'.DS.$row['doctor_image'].'" width="100px" height="100px">';
+                                                } else {
+                                                    'NO Image';
+                                                }
+                                            ?>
+                                        </td>
                                             <td><?=ucfirst($row['doctor_name'])?></td>
-                                            <td><?='department';?></td>
-                                            <td><?=($row['doctor_is_show'] == 1) ? 'Show' : 'Not Show';?></td>
+                                            <td>
+                                            <?php
+                                                $data =  get_data('departments','where `department_id` = '.$row['department_id'],'name');
+                                                echo $data[0]['department_name'];
+                                            ?>
+                                            </td>
                                             <td><?=$row['doctor_phone']?></td>
-                                            <td><a href="#" class="btn btn-primary">Details</a></td>
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                                            <td><?=($row['doctor_is_show'] == 1) ? 'Show' : 'Not Show';?></td>
+                                            <td><a href="<?=ADMIN_URL.'doctors/details.php?doctor_id='.$row['doctor_id']?>" class="btn btn-primary">Details</a></td>
+                                            <td><a href="<?=ADMIN_URL.'doctors/edit.php?doctor_id='.$row['doctor_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'doctors/delete.php?doctor_id='.$row['doctor_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>
