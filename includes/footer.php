@@ -1,4 +1,4 @@
-sc<!-- start footer Area -->		
+<!-- start footer Area -->		
 			<footer class="footer-area section-gap">
 				<div class="container">
 					<div class="row">

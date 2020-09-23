@@ -27,7 +27,7 @@
                                     <?php $rows = get_data('departments'); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
-                                            <td><?=$row['department_id']?></td>
+                                            <td><?=type_count()?></td>
                                             <td><?php 
                                                 if (isset($row['department_image'])) {
                                                     echo '<img src="'.WEBSITE_URL.'uploads'.DS.'departments'.DS.$row['department_image'].'" width="100px" height="100px">';

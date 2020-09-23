@@ -27,7 +27,7 @@
                                     <?php $rows = get_data('features'); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
-                                            <td><?=$row['feature_id']?></td>
+                                            <td><?=type_count()?></td>
                                             <td><?=$row['feature_icon']?></td>
                                             <td><?=ucfirst($row['feature_name'])?></td>
                                             <td><?=$row['feature_description']?></td>

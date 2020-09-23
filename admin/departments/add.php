@@ -52,7 +52,7 @@
                             uploade_image($_FILES, 'departments');
                             $restult = insert_into_table('departments', $data);
                             if ($restult) {
-                                echo '<div class="alert alert-success">Data inserted Succ</div>';
+                                echo '<div class="alert alert-success">Department inserted Succ</div>';
                             } else {
                                 echo 'Error';
                             }

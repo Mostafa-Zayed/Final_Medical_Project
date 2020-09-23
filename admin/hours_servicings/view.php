@@ -31,8 +31,8 @@
                                             <td><?=ucfirst($row['hours_servicing_day'])?></td>
                                             <td><?=ucfirst($row['hours_servicing_time'])?></td>
                                             <td><?=($row['hours_servicing_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                                            <td><a href="<?=ADMIN_URL.'hours_servicings/edit.php?hours_servicing_id='.$row['hours_servicing_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'hours_servicings/delete.php?hours_servicing_id='.$row['hours_servicing_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>

@@ -26,7 +26,7 @@
                                     <?php $rows = get_data('cities'); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
-                                            <td><?=$row['city_id']?></td>
+                                            <td><?=type_count()?></td>
                                             <td><?=ucfirst($row['city_name'])?></td>
                                             <td><?=($row['city_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
                                             <td><?=$row['state_id']?></td>

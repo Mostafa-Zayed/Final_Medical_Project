@@ -3,15 +3,15 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'states/add.php'?>"> Add State</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'appointment/add.php'?>"> ADD APPOINTMENT</a></h4>
             <br>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Create State</h3>
+                        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Create Appointment</h3>
                     </div>
                     <div class="panel-body">
                             <div class="row text-center">
-                                <h2>New State</h2>
+                                <h2>New Appointment</h2>
                             </div>
                             <br>
                             

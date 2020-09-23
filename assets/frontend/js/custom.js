@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    //console.log('hi');
     $('#services').change(function(){
         //console.log('country selected');
          var serviceId = $(this).val();
@@ -13,8 +14,6 @@ $(document).ready(function(){
                     var doctor = $('#doct');
                     doctor.fadeIn('slow');
                 }
-                
-                //console.log($data);
             }
         });
     });
@@ -45,5 +44,25 @@ $(document).ready(function(){
         });
     });
     
+    $('#email_input').blur(function(){
+        var check = $("#email_error").hasClass("alert-danger");
+        if(check){
+            $('#email_error').removeClass('alert-danger');
+            $('#email_error').html('');
+        }
+        var email = $(this).val();
+        email = email.trim();
+        $.ajax({
+            url: "ajax/check_email.php",
+            type: "POST",
+            data: {user_email:email},
+            success: function(data){
+                console.log(data);
+                if (data == 1){
+                    $('#email_error').addClass('alert-danger').html('Sorry Email Is Exists!!');
+                }
+            }
+        });
+    });
 
 });

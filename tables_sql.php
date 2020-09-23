@@ -28,11 +28,11 @@ $sql = "create table if not exists `users` (
     `user_name` varchar(100) not null,
     `user_email` varchar(100) not null unique,
     `user_password` varchar(255) not null,
-    `user_gneder` enum('male','female') not null,
+    `user_gender` enum('male','female') not null,
     `user_phone` varchar(20),
     `user_age` varchar(3),
     `user_image` varchar(255),
-    `user_is_acitve` enum('1','0') not null default '1'
+    `user_is_active` enum('1','0') not null default '1'
 )";
 
 mysqli_query($connection,$sql);
@@ -71,7 +71,7 @@ mysqli_query($connection,$sql);
 $sql = "create table if not exists `services` (
     `service_id` integer(11) unsigned not null primary key auto_increment,
     `service_name` varchar(30) not null,
-    `service_type` int(11) unsigned not null,
+    `service_type_id` int(11) unsigned not null,
     `service_has_doctor` enum('1','0') not null default '0',
     `service_is_active` enum('1','0') not null default '1',
     constraint foreign key(service_type) references service_types(service_type_id)
@@ -132,7 +132,8 @@ $sql = "create table if not exists `doctors` (
     `doctor_twitter` varchar(255) not null,
     `doctor_instgram` varchar(255) not null,
     `department_id` int(11) unsigned not null,
-    `doctor_is_show` enum('1','0') not null default '1',
+    `doctor_is_show` enum('1','0') not null default '0',
+    `doctor_is_active` enum('1','0') not null default '1',
     constraint fk_departmens_department_id foreign key(department_id) references departments(department_id)
 )";
 
@@ -148,6 +149,7 @@ $sql = "create table if not exists `appointments` (
     `appointment_date_birth` varchar(255) not null,
     `appointment_message` text,
     `appointment_is_confirmed` enum('1','0') default '0',
+    `appointment_is_created_at` timestamp default current_timestamp,
     `service_id` int(11) unsigned not null,
     `doctor_id` int(11) unsigned not null,
     `country_id` int(11) unsigned not null,
@@ -234,6 +236,20 @@ $sql = "create table if not exists `messages` (
     `message_content` text not null,
     `user_id` int(11) unsigned,
     constraint foreign key(user_id) references users(user_id) 
+)";
+
+mysqli_query($connection,$sql);
+
+// Admins Table
+$sql = "create table if not exists `admins` (
+    `admin_id` int(11) unsigned not null primary key auto_increment,
+    `admin_name` varchar(30) not null,
+    `admin_email` varchar(255) not null,
+    `admin_password` varchar(255) not null,
+    `admin_image` varchar(255),
+    `admin_type` enum('admin','super_admin') default('admin'),
+    `admin_is_active` enum('0','1') default('1'),
+    `admin_is_created_at` timestamp default current_timestamp
 )";
 
 mysqli_query($connection,$sql);

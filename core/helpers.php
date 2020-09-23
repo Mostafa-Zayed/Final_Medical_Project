@@ -12,8 +12,8 @@ if (! function_exists('create_sidebar'))
         }
         return $items;
     }
-
-    function decomposed_settings(array $data) 
+}
+function decomposed_settings(array $data) 
     {
         $count = count($data);
         $resource = array();
@@ -24,5 +24,16 @@ if (! function_exists('create_sidebar'))
             }
         }
         return $resource;
+    }
+
+function get_models(string $input) 
+{
+    $input = substr($input,0,strrpos($input, '_'));
+    $last_char = substr($input, -1);
+    if ($last_char === 'y') {
+        $input = rtrim($input, 'y');
+        return $input .= 'ies';
+    } else {
+        return $input .= 's';
     }
 }

@@ -140,3 +140,59 @@ function medical_get_all(string $table): array
     }
     return $data;
 }
+
+
+function get_one(string $table, string $where): array
+{
+    global $connection;
+    $sql = "SELECT * FROM `{$table}` where {$where} LIMIT 1";
+    $result = mysqli_query($connection, $sql);
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        return $row;
+    } else {
+        return [];
+    }  
+}
+
+function medical_update(string $table, array $data, string $where): bool
+{
+    global $connection;
+    $parts = '';
+    foreach ($data as $key => $value){
+        $parts .= "`".$key."` = '$value' ,";
+    }
+    $parts = rtrim($parts, ',');
+    $sql = "UPDATE `{$table}` SET  $parts WHERE {$where}";
+    $result = mysqli_query($connection, $sql);
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function medical_delete_one(string $table, $where): bool
+{
+    global $connection;
+    $sql = "DELETE FROM `{$table}` WHERE {$where}";
+    return mysqli_query($connection, $sql);
+}
+
+function get_table_count(string $table)
+{
+    global $connection;
+    $sql = "SELECT COUNT(*) AS rows_count FROM `{$table}`";
+    $result = mysqli_query($connection, $sql);
+    return mysqli_fetch_assoc($result)['rows_count'];
+}
+
+function get_table_count_where(string $table, string $where)
+{
+    global $connection;
+    $sql = "SELECT COUNT(*) AS rows_count FROM `{$table}` WHERE $where";
+    return $sql;
+    $result = mysqli_query($connection, $sql);
+    return mysqli_fetch_assoc($result)['rows_count'];
+}
+?>

@@ -31,7 +31,7 @@ function get_session(string $key)
  */
 function end_session()
 {
-    session_start();
+    //session_start();
     $_SESSION = array();
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
@@ -56,6 +56,4 @@ function check_session()
     }
 }
 
-//set_session('name','mostafa');
-//echo get_session('name');
 ?>

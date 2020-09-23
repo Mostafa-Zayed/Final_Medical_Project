@@ -35,6 +35,9 @@ defined('CORE') || define('CORE',ROOT.'core'.DS);
 // ADMIN PATH
 defined('ADMIN') || define('ADMIN',ROOT.'admin'.DS);
 
+// UPLOADS PATH
+defined('UPLOADS') || define('UPLOADS',ROOT.'uploads'.DS);
+
 // WEBSITE URL LINK
 defined('WEBSITE_URL') || define('WEBSITE_URL','http://'.$_SERVER['HTTP_HOST'].DS.'medical_test'.DS);
 

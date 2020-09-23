@@ -1,5 +1,6 @@
 <?php require_once "../../globals.php"; ?>
 <?php require_once INCLUDES."header_dashboard.php"; ?>
+
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -26,7 +27,7 @@
                                     <?php $rows = get_data('pages'); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
-                                            <td><?=$row['page_id']?></td>
+                                            <td><?=type_count()?></td>
                                             <td><?=ucfirst($row['page_name'])?></td>
                                             <td><?=$row['page_link']?></td>
                                             <td><?=($row['page_is_active'] == 1) ? 'Active' : 'Not Active';?></td>

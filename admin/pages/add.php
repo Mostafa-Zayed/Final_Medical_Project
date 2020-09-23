@@ -49,13 +49,14 @@
                                 if (empty($errors)) {
                                     $restult = insert_into_table('pages', $data);
                                     if ($restult) {
-                                        echo '<div class="alert alert-success">Data inserted Succ</div>';
+                                        $success = '<div class="alert alert-success">Page inserted Succefuly</div>';
                                     } else {
-                                        echo 'Error';
+                                        $success = '<div class="alert alert-danger">Page Not Inserted Succefuly</div>';
                                     }
                                 }
                             }
                             ?>
+                            <?=(! empty($success)) ? $success : ''?>
                             <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
                             <div class="row">
                             <?php $input = "page_name"; ?>

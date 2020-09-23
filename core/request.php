@@ -19,7 +19,7 @@ function prepare_input( $input): string
 */
 function redirect(string $path): void 
 {
-	header('location:'.WEBSITE_URL.$path);
+	header("Location:".WEBSITE_URL.$path);
 }
 
 /**
@@ -34,5 +34,10 @@ function decomposed_array(array $data): void
 		GLOBAL $$key;
 		 $$key = prepare_input($value);
 	 }
+}
+
+function abort()
+{
+	redirect('admin/404.php');
 }
 ?>

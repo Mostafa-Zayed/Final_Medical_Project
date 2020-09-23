@@ -24,15 +24,14 @@
                                     </thead>
                                     <tbody>
                                     <?php $rows = get_data('services'); ?>
-                                    <?php //print_r($rows); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
-                                            <td><?=$row['service_id']?></td>
+                                            <td><?=type_count()?></td>
                                             <td><?=ucfirst($row['service_name'])?></td>
-                                            <td><?=$row['service_type']?></td>
+                                            <td><?=$row['service_type_id']?></td>
                                             <td><?=($row['service_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                                            <td><a href="<?=ADMIN_URL.'services/edit.php?service_id='.$row['service_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'services/delete.php?service_id='.$row['service_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>

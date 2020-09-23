@@ -1,4 +1,8 @@
 <?php require_once "globals.php";
-echo get_data_by_id('departments',1,'id');
+
+$rows = get_table_count_where('appointments',"DATE(appointment_is_created_at) = CURDATE()");
+echo $rows;
+//pre($rows);
+	
 ?>
 

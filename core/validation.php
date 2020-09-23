@@ -1,6 +1,9 @@
 <?php
+// Varaible Success Message 
+$success = '';
 // Array Of Errors
 $errors = array();
+// Array Of Length Constans
 $fixed = array();
 $length_constants['country_name'] = 30;
 $length_constants['state_name'] = 30;
@@ -14,15 +17,35 @@ $length_constants['department_name'] = 50;
 $length_constants['brand_name'] = 20;
 $length_constants['feature_name'] = 50;
 $length_constants['feature_icon'] = 50;
+$length_constants['doctor_name'] = 50;
+$length_constants['doctor_phone'] = 20;
+$length_constants['doctor_address'] = 150;
+$length_constants['doctor_facebook'] = 255;
+$length_constants['doctor_twitter'] = 255;
+$length_constants['doctor_instgram'] = 255;
+$length_constants['hours_servicing_day'] = 50;
+$length_constants['hours_servicing_time'] = 50;
+$length_constants['service_name'] = 100;
 $length_constants['sliderheading'] = 60;
 $length_constants['appointment_name'] = 50;
 $length_constants['appointment_phone'] = 20;
-$length_constants['appointment_email_'] = 100;
-//$length_constants['country'] = 30;
-//$length_constants['country'] = 30;
+$length_constants['appointment_email'] = 100;
+$length_constants['user_name'] = 100;
+$length_constants['user_email'] = 100;
+$length_constants['user_password'] = 255;
+$length_constants['user_age'] = 3;
+$length_constants['user_phone'] = 20;
+$length_constants['admin_name'] = 30;
+$length_constants['admin_email'] = 100;
+$length_constants['admin_password'] = 255;
 
 foreach ($length_constants as $key => $value) {
 	defined(strtoupper('max_'.$key.'_length')) || define(strtoupper('max_'.$key.'_length'), $value);
+}
+$min_length_constants['user_password'] = 8;
+$min_length_constants['admin_password'] = 8;
+foreach ($min_length_constants as $key => $value) {
+	defined(strtoupper('min_'.$key.'_length')) || define(strtoupper('min_'.$key.'_length'), $value);
 }
 //echo MAX_STATE_NAME_LENGTH;
 // Constant Of MaxEmaillength
@@ -87,6 +110,10 @@ function is_not_more_than(string $value, int $maxlength): bool
 	return strlen($value) <= $maxlength;
 }
 
+function is_not_less_than(string $value, int $minlength): bool
+{
+    return strlen($value) >= $minlength;
+}
 /**
  * This Function Check if The Value Integer Or Not 
  * 
@@ -156,5 +183,13 @@ function uploade_image(array $resource, string $uploade_dir)
     } else {
         return '<br>Erro : </br> Image Not Uploaded Succefuly';
     }
+}
+
+
+function pre(array $data)
+{
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
 }
 ?>

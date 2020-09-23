@@ -27,7 +27,7 @@
                                     <?php $rows = get_data('brands'); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
-                                            <td><?=$row['brand_id']?></td>
+                                            <td><?=type_count()?></td>
                                             <td><?php 
                                                 if (isset($row['brand_image'])) {
                                                     echo '<img src="'.WEBSITE_URL.'uploads'.DS.'brands'.DS.$row['brand_image'].'" width="100px" height="100px">';

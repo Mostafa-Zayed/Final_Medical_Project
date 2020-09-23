@@ -9,118 +9,152 @@
 				<h1>We Care for Your HealthEvery Moment</h1>
 				<p class="pt-10 pb-10 text-white">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.
-							</p>
-							<a href="#" class="primary-btn text-uppercase">Get Started</a>
-						</div>										
-					</div>
-				</div>					
-			</section>
-			<!-- End banner Area -->
-
-			<!-- Start appointment Area -->
-			<section class="appointment-area">			
-				<div class="container">
-					<div class="row justify-content-between align-items-center pb-120 appointment-wrap">
-						<div class="col-lg-5 col-md-6 appointment-left">
-							<h1>
-								Servicing Hours
-							</h1>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.
-							</p>
-							<ul class="time-list">
-								<?php $service_hours = get_data('hours_servicings','where hours_servicing_is_active = 1','day,time');?>
-								<?php foreach ($service_hours as $item) : ?>
-									<li class="d-flex justify-content-between">
-										<span><?=$item['hours_servicing_day']?></span>
-										<span><?=$item['hours_servicing_time']?></span>
-									</li>
-								<?php endforeach; ?>
-							</ul>
-						</div>
-						<?php if (isset($_POST['send'])) {
-							//echo '<pre>';
-							//print_r($_POST);
-							//echo '</pre>';
-							decomposed_array($_POST);
-							//print_r($_POST);
-							// Validation
-							// appointment_name: required, string, max:50
-							$input = 'appointment_name';
-							if (! is_required($$input)) {
-								$errors[$input] = 'required';
-							} elseif (! is_string_modified($$input)) {
-								$errors[$input] = 'Must be String';
-							} elseif (! is_not_more_than($$input, MAXAPPOINTMENT_NAMELENGTH)) {
-								$errors[$input] = 'Must be less than '.MAXAPPOINTMENT_NAMELENGTH.' Characters';
-							}
+				</p>
+				<a href="#" class="primary-btn text-uppercase">Get Started</a>
+			</div>										
+		</div>
+	</div>					
+</section>
+<!-- End banner Area -->
+<!-- Start appointment Area -->
+<section class="appointment-area">			
+	<div class="container">
+		<div class="row justify-content-between align-items-center pb-120 appointment-wrap">
+			<div class="col-lg-5 col-md-6 appointment-left">
+				<h1>Servicing Hours</h1>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.</p>
+				<ul class="time-list">
+					<?php $service_hours = get_data('hours_servicings','where hours_servicing_is_active = 1','day,time');?>
+					<?php foreach ($service_hours as $item) : ?>
+							<li class="d-flex justify-content-between">
+								<span><?=$item['hours_servicing_day']?></span>
+								<span><?=$item['hours_servicing_time']?></span>
+							</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+			<?php if (isset($_POST['send'])) {
+						decomposed_array($_POST);
+						$data = array();
+						// appointment_name: required, string, max:50
+						$input = 'appointment_name';
+						if (! is_required($$input)) {
+							$errors[$input] = 'required';
+						} elseif (! is_string_modified($$input)) {
+							$errors[$input] = 'Must be String';
+						} elseif (! is_not_more_than($$input, MAX_APPOINTMENT_NAME_LENGTH)) {
+							$errors[$input] = 'Must be less than '.MAX_APPOINTMENT_NAME_LENGTH.' Characters';
+						}
+						$data[$input] = $$input;
 							// appointment_phone: required, string, max:20
 							$input = 'appointment_phone';
 							if (! is_required($$input)) {
 								$errors[$input] = 'required';
 							} elseif (! is_string_modified($$input)) {
 								$errors[$input] = 'Must be String';
-							} elseif (! is_not_more_than($$input, MAXAPPOINTMENT_PHONELENGTH)) {
-								$errors[$input] = 'Must be less than '.MAXAPPOINTMENT_PHONELENGTH.' Characters';
+							} elseif (! is_not_more_than($$input, MAX_APPOINTMENT_PHONE_LENGTH)) {
+								$errors[$input] = 'Must be less than '.MAX_APPOINTMENT_PHONE_LENGTH.' Characters';
 							}
+							$data[$input] = $$input;
 							// appointment_email: required, string, max:100, email
 							$input = 'appointment_email';
 							if (! is_required($$input)) {
 								$errors[$input] = 'required';
 							} elseif (! is_string_modified($$input)) {
 								$errors[$input] = 'Must be String';
-							} elseif (! is_not_more_than($$input, MAXAPPOINTMENT_EMAIL_LENGTH)) {
-								$errors[$input] = 'Must be less than '.MAXAPPOINTMENT_EMAIL_LENGTH.' Characters';
+							} elseif (! is_not_more_than($$input, MAX_APPOINTMENT_EMAIL_LENGTH)) {
+								$errors[$input] = 'Must be less than '.MAX_APPOINTMENT_EMAIL_LENGTH.' Characters';
 							} elseif (! is_email($$input)) {
 								$errors[$input] = 'Must be Email!!';
 							}
+							$data[$input] = $$input;
 							// appointment_date_birth: required
 							$input = 'appointment_date_birth';
 							if (! is_required($$input)) {
 								$errors[$input] = 'required';
 							}
+							$data[$input] = $$input;
 							// service_id: required
 							$input = 'service_id';
 							if (! is_required($$input)) {
 								$errors[$input] = 'Please Select Service ';
 							}
+							$$input = (int) $$input;
                             $check_id = get_data_by_id('services', $$input, 'id');
                             if (empty($check_id)) {
-                                $errors[$input] = 'Invalide Country Data';
+                                $errors[$input] = 'Invalide Service Name';
+							}
+							$data[$input] = $$input;
+							// doctor_id
+							$input = 'doctor_id';
+							if (isset($$input)) {
+								$$input = (int) $$input;
+								$check_id = get_data_by_id('doctors', $$input, 'id');
+                            	if (empty($check_id)) {
+                                	$errors[$input] = 'Invalide Doctor Name';
+								}
+								$data[$input] = $$input;
 							}
 							// country_id: required
 							$input = 'country_id';
+							$$input = (int) $$input;
 							if (! is_required($$input)) {
 								$errors[$input] = 'Please Select Country ';
 							}
 							$check_id = get_data_by_id('countries', $$input, 'id');
                             if (empty($check_id)) {
-                                $errors[$input] = 'Invalide Country Data';
-                            }
+                                $errors[$input] = 'Invalide Country Name';
+							}
+							$data[$input] = $$input;
 							// state_id: required
 							$input = 'state_id';
+							$$input = (int) $$input;
 							if (! is_required($$input)) {
 								$errors[$input] = 'Please Select State ';
 							}
 							$check_id = get_data_by_id('states', $$input, 'id');
                             if (empty($check_id)) {
-                                $errors[$input] = 'Invalide Country Data';
-                            }
+                                $errors[$input] = 'Invalide State Name';
+							}
+							$data[$input] = $$input;
 							// city_id: required
 							$input = 'city_id';
+							$$input = (int) $$input;
 							if (! is_required($$input)) {
 								$errors[$input] = 'Please Select City ';
 							}
 							$check_id = get_data_by_id('cities', $$input, 'id');
                             if (empty($check_id)) {
-                                $errors[$input] = 'Invalide Country Data';
+                                $errors[$input] = 'Invalide City Name';
+							}
+							$data[$input] = $$input;
+							// appointment_date: required
+							$input = 'appointment_date';
+							if (! is_required($$input)) {
+								$errors[$input] = 'required';
+							}
+							$data[$input] = $$input;
+							// appointment_message 
+							$input = 'appointment_message';
+							if (isset($$input)) {
+								if (! is_string_modified($$input)) {
+									$errors[$input] = 'Must be String';
+								}
+								$data[$input] = $$input;
+							}
+							if (empty($errors)) {
+								//pre($data);
+								$restult = insert_into_table('appointments', $data);
+                            if ($restult) {
+                                $success = '<div class="alert alert-success">Your Appointment is Sended Succfult Please Wait Us To Confirm Appointment With You</div>';
+                            } else {
+                                echo 'Error';
                             }
-							//echo '<pre>';
-							//print_r($errors);
-							//echo '</pre>';
+							}
 						}
 						?>
 						<div class="col-lg-6 col-md-6 appointment-right pt-60 pb-60" id="appointment">
+						<?=! empty($success) ? $success : ''?>
 							<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
 								<h3 class="pb-20 text-center mb-30">Book an Appointment</h3>
 								<div class="form-group">		
@@ -173,9 +207,9 @@
 									</select><?=getError('city_id')?>
 								</div>	
 								<div class="form-group">
-									<input id="datepicker2" class="dates form-control"  placeholder="appointment Date" type="text" name="appoiontment_date">  
+									<input id="datepicker2" class="dates form-control"  placeholder="appointment Date" type="text" name="appointment_date"><?=getError('appointment_date')?>
 								</div>
-								<textarea name="appoiontment_messege" class="form-control" rows="5" placeholder = 'Messege'></textarea> 
+								<textarea name="appointment_message" class="form-control" rows="5" placeholder = 'Messege'></textarea> <?=getError('appointment_message')?>
 								<br>
 								<div class="form-group">
 									<button class="primary-btn text-uppercase" type="submit" name="send">Confirm Booking</button>
@@ -186,23 +220,22 @@
 				</div>	
 			</section>
 			<!-- End appointment Area -->
-
-			<!-- Start facilities Area -->
-			<section class="facilities-area section-gap">
-				<div class="container">
-		            <div class="row d-flex justify-content-center">
-		                <div class="menu-content pb-70 col-lg-7">
-		                    <div class="title text-center">
-		                        <h1 class="mb-10">Our Latest Facilities</h1>
-		                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. </p>
-		                    </div>
-		                </div>
-		            </div>
-					<div class="row">
-					<?php $features = get_data('features', 'where feature_is_active = 1', 'name,icon,description'); ?>
-					<?php foreach ($features as $feature) : ?>
-						<div class="col-lg-3 col-md-6">
-							<div class="single-facilities">
+<!-- Start facilities Area -->
+<section class="facilities-area section-gap">
+	<div class="container">
+		<div class="row d-flex justify-content-center">
+		    <div class="menu-content pb-70 col-lg-7">
+		        <div class="title text-center">
+		            <h1 class="mb-10">Our Latest Facilities</h1>
+		            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua. </p>
+		        </div>
+		    </div>
+		</div>
+		<div class="row">
+		<?php $features = get_data('features', 'where feature_is_active = 1', 'name,icon,description'); ?>
+		<?php foreach ($features as $feature) : ?>
+			<div class="col-lg-3 col-md-6">
+				<div class="single-facilities">
 								<span class="<?=$feature['feature_icon']?>"></span>
 								<a href="#"><h4><?=$feature['feature_name']?></h4></a>
 								<p><?=$feature['feature_description']?></p>
@@ -270,90 +303,40 @@
 			</section>
 			<!-- End offered-service Area -->
 		
-			<!-- Start team Area -->
-		    <section class="team-area section-gap">
-		        <div class="container">
-		            <div class="row d-flex justify-content-center">
-		                <div class="menu-content pb-70 col-lg-7">
-		                    <div class="title text-center">
-		                        <h1 class="mb-10">Our Consultants</h1>
-		                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="row justify-content-center d-flex align-items-center">
-		                <div class="col-lg-3 col-md-6 single-team">
-		                    <div class="thumb">
-		                        <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t1.jpg" alt="">
-		                        <div class="align-items-end justify-content-center d-flex">
-									<div class="social-links">
-										<a href="#"><i class="fa fa-facebook"></i></a>
-										<a href="#"><i class="fa fa-twitter"></i></a>
-										<a href="#"><i class="fa fa-dribbble"></i></a>
-										<a href="#"><i class="fa fa-behance"></i></a>
-									</div>			                        	
-		                            <p>
-		                            	inappropriate behavior
-		                            </p>
-		                            <h4>Andy Florence</h4>		                            
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="col-lg-3 col-md-6 single-team">
-		                    <div class="thumb">
-		                        <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t2.jpg" alt="">
-		                        <div class="align-items-end justify-content-center d-flex">
-									<div class="social-links">
-										<a href="#"><i class="fa fa-facebook"></i></a>
-										<a href="#"><i class="fa fa-twitter"></i></a>
-										<a href="#"><i class="fa fa-dribbble"></i></a>
-										<a href="#"><i class="fa fa-behance"></i></a>
-									</div>			                        	
-		                            <p>
-		                            	inappropriate behavior
-		                            </p>
-		                            <h4>Andy Florence</h4>		                            
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="col-lg-3 col-md-6 single-team">
-		                    <div class="thumb">
-		                        <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t3.jpg" alt="">
-		                        <div class="align-items-end justify-content-center d-flex">
-									<div class="social-links">
-										<a href="#"><i class="fa fa-facebook"></i></a>
-										<a href="#"><i class="fa fa-twitter"></i></a>
-										<a href="#"><i class="fa fa-dribbble"></i></a>
-										<a href="#"><i class="fa fa-behance"></i></a>
-									</div>			                        	
-		                            <p>
-		                            	inappropriate behavior
-		                            </p>
-		                            <h4>Andy Florence</h4>		                            
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="col-lg-3 col-md-6 single-team">
-		                    <div class="thumb">
-		                        <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t4.jpg" alt="">
-		                        <div class="align-items-end justify-content-center d-flex">
-									<div class="social-links">
-										<a href="#"><i class="fa fa-facebook"></i></a>
-										<a href="#"><i class="fa fa-twitter"></i></a>
-										<a href="#"><i class="fa fa-dribbble"></i></a>
-										<a href="#"><i class="fa fa-behance"></i></a>
-									</div>			                        	
-		                            <p>
-		                            	inappropriate behavior
-		                            </p>
-		                            <h4>Andy Florence</h4>		                            
-		                        </div>
-		                    </div>
-		                </div>		                		                		                
+<!-- Start team Area -->
+<section class="team-area section-gap">
+	<div class="container">
+		<div class="row d-flex justify-content-center">
+		    <div class="menu-content pb-70 col-lg-7">
+		        <div class="title text-center">
+		            <h1 class="mb-10">Our Consultants</h1>
+		            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+		        </div>
+			</div>
+		</div>
+		<div class="row justify-content-center d-flex align-items-center">
+		<?php $doctors = get_data('doctors', 'where doctor_is_show = 1', 'id,name'); ?>
+		<?php foreach ($doctors as $doctor): ?>
+		    <div class="col-lg-3 col-md-6 single-team">
+		        <div class="thumb">
+		            <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t1.jpg" alt="doctor">
+		            <div class="align-items-end justify-content-center d-flex">
+						<div class="social-links">
+							<a href="#"><i class="fa fa-facebook"></i></a>
+							<a href="#"><i class="fa fa-twitter"></i></a>
+							<a href="#"><i class="fa fa-dribbble"></i></a>
+							<a href="#"><i class="fa fa-behance"></i></a>
+						</div>			                        	
+		                <p>inappropriate behavior</p>
+		                <h4>Andy Florence</h4>		                            
 		            </div>
 		        </div>
-		    </section>
-		    <!-- End team Area -->				
+		    </div>
+		<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+<!-- End team Area -->				
 						
 			<!-- Start feedback Area -->
 			<section class="feedback-area section-gap relative">
@@ -429,29 +412,20 @@
 			</section>
 			<!-- End feedback Area -->	
 
-		    <!-- Start brands Area -->
-		    <section class="brands-area">
-		        <div class="container">
-		            <div class="brand-wrap section-gap">
-		                <div class="row align-items-center active-brand-carusel justify-content-start no-gutters">
-		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l1.png" alt=""></a>
-		                    </div>
-		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l2.png" alt=""></a>
-		                    </div>
-		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l3.png" alt=""></a>
-		                    </div>
-		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l4.png" alt=""></a>
-		                    </div>
-		                    <div class="col single-brand">
-		                        <a href="#"><img class="mx-auto" src="<?=WEBSITE_URL?>assets/frontend/img/l5.png" alt=""></a>
-		                    </div>
-		                </div>
-		            </div>
+<!-- Start brands Area -->
+<section class="brands-area">
+	<div class="container">
+		<div class="brand-wrap section-gap">
+			<div class="row align-items-center active-brand-carusel justify-content-start no-gutters">
+			<?php $brands = get_data('brands', 'where brand_is_active = 1', 'id,name,image'); ?>
+			<?php foreach ($brands as $brand): ?>
+		        <div class="col single-brand">
+		            <a href="<?='https:www.'.$brand['brand_name'].'.com'?>"><img class="mx-auto" src="<?=WEBSITE_URL.'uploads/brands/'.$brand['brand_image']?>" alt=""></a>
 		        </div>
-		    </section>
+			<?php endforeach; ?>
+		    </div>
+		</div>
+	</div>
+</section>
 		    <!-- End brands Area -->
 			<?php include_once "includes/footer.php"; ?>
