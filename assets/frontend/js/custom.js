@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    //console.log('hi');
+    console.log('hi');
     $('#services').change(function(){
         //console.log('country selected');
          var serviceId = $(this).val();
@@ -65,4 +65,7 @@ $(document).ready(function(){
         });
     });
 
+    // Update Admin Type 
+    var test = $('#admin_type');
+    console.log(test);
 });

@@ -6,6 +6,7 @@
             <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'admins/view.php'?>">Admins</a><a href="<?=ADMIN_URL.'admins/add.php';?>" class="btn btn-primary pull-right">ADD ADMIN</a></h4>
             <br>
             <div class="col-lg-12">
+                <div style="display:none" id="message"></div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Admins</h3>
@@ -26,24 +27,24 @@
                                     <tbody>
                                     <?php $rows = get_data('admins'); ?>
                                     <?php foreach ($rows as $row): ?>
-                                        <tr>
+                                        <tr data-id="<?=$row['admin_id']?>">
                                             <td><?=type_count()?></td>
                                             <td><?php 
-                                                if (isset($row['brand_image'])) {
+                                                if (isset($row['admin_image'])) {
                                                     echo '<img src="'.WEBSITE_URL.'uploads'.DS.'admins'.DS.$row['admin_image'].'" width="100px" height="100px">';
                                                 } else {
-                                                    'NO Image';
+                                                    echo 'NO Image';
                                                 }
                                                 ?>
                                             </td>
-                                            <td><?=$row['admin_name']?></td>
+                                            <td><?=ucfirst($row['admin_name'])?></td>
                                             <td>
-                                                <select class="form-control" id="admin-type">
+                                                <select class="form-control" data-id="<?=$row['admin_id']?>" id="admin_type">
                                                     <option value="admin" <?=($row['admin_type'] == 'admin') ? 'selected' : ''?>>Admin</option>
                                                     <option value="super_admin" <?=($row['admin_type'] == 'super_admin') ? 'selected' : ''?>>Super Admin</option>
                                                 </select>
                                                 <br>
-                                                <button class="btn btn-primary pull-right">Update</button>
+                                                <button class="btn btn-primary pull-right" style="display:none;" id="admin_update<?=$row['admin_id']?>">Update</button>
                                             </td>
                                             <td><?=($row['admin_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
                                             <td><a href="<?=ADMIN_URL.'adimins/edit.php?admin_id='.$row['admin_id']?>" class="btn btn-primary">Edit</a></td>
