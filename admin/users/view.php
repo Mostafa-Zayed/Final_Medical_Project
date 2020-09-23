@@ -3,12 +3,13 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'cities/view.php'?>">Cities</a><a href="<?=ADMIN_URL.'cities/add.php';?>" class="btn btn-primary pull-right">ADD CITY</a></h4>
+                    <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'users/view.php'?>">Users</a><a href="<?=ADMIN_URL.'users/add.php';?>" class="btn btn-primary pull-right">ADD USER</a></h4>
                     <br>
                     <div class="col-lg-12">
+                        <div id="message"></div>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Cities</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Users</h3>
                         </div>
                         <div class="panel-body">
                             <div id="shieldui-grid1"></div>
@@ -16,21 +17,37 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <th>ID</th>
+                                        <th>IMAGE</th>
                                         <th>NAME</th>
+                                        <th>EMAIL</th>
                                         <th>ACTIVE</th>
-                                        <th>STATE</th>
                                         <th>EDIT</th>
                                         <th>DELETE</th>
                                     </thead>
                                     <tbody>
-                                    <?php $rows = get_data('cities'); ?>
-                                    <?php //print_r($rows); ?>
+                                    <?php $rows = get_data('users'); ?>
                                     <?php foreach ($rows as $row): ?>
-                                        <tr>
-                                            <td><?=$row['city_id']?></td>
-                                            <td><?=ucfirst($row['city_name'])?></td>
-                                            <td><?=($row['city_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
-                                            <td><?=$row['state_id']?></td>
+                                        <tr data-id=<?=$row['user_id']?> data-mod="users">
+                                            <td><?=type_count()?></td>
+                                            <td><?php 
+                                                if (isset($row['user_image'])) {
+                                                    echo '<img src="'.WEBSITE_URL.'uploads'.DS.'users'.DS.$row['user_image'].'" width="100px" height="100px">';
+                                                } else {
+                                                    echo 'NO Image';
+                                                }
+                                                ?>
+                                            </td>
+                                            <td><?=ucfirst($row['user_name'])?></td>
+                                            <td><?=$row['user_email']?>
+                                            <td>
+                                                <select class="form-control" data-id="<?=$row['user_id']?>" id="active">
+                                                    <option value="1" <?=($row['user_is_active'] == 1) ? 'selected' : ''?>>Active</option>
+                                                    <option value="0" <?=($row['user_is_active'] == 0) ? 'selected' : ''?>>Not Active</option>
+                                                </select>
+                                                <br>
+                                                <button class="btn btn-primary pull-right" style="display:none;" id="btn_active<?=$row['user_id']?>">Update</button>
+                                            </td>
+                                            
                                             <td><a href="#" class="btn btn-primary">Edit</a></td>
                                             <td><a href="#" class="btn btn-danger">Delete</a></td>
                                         </tr>

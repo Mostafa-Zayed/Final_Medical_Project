@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     // Update Admin Type 
     $('select#admin_type').change(function(){
         var select_id = $(this).attr('data-id');
@@ -21,23 +20,30 @@ $(document).ready(function(){
                     })
                 }
             });
-        }
-        //$('#admin_update').click(function(){
-          //  var admin_id = $('#admin_type').parents('tr').attr('id');
-            //console.log(admin_id);
-            /*var type = $('#admin_type').val();
-            type = type.trim();
-            if (type != '') {
-                $.ajax({
-                    url: "../../ajax/update_admin_type.php",
-                    type: "POST",
-                    data: {admin_type:type},
-                    success: function(data){
-                        console.log(data);
-                    }
-                })
-            }*/
-        //})
-        
+        } 
     });
+
+    // update Active 
+    $('select#active').change(function(){
+        var select_id = $(this).attr('data-id');
+        var tr_id = $(this).parents('tr').attr('data-id');
+        var models = $(this).parents('tr').attr('data-mod');
+        if (select_id == tr_id) {
+            var btn = $('#btn_active'+select_id).css('display','block');
+            btn.click(function(){
+                var active = btn.siblings('select').val();
+                models = models.trim();
+                $.ajax({
+                    url: "../../ajax/update_active.php",
+                    type: "POST",
+                    data: {models:models,active:active,id:select_id},
+                    success: function(data){
+                        $('#message').html(data);
+                    }
+                });
+                
+            });
+        }
+    });
+        
 });
