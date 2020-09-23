@@ -47,7 +47,7 @@
                                                 <button class="btn btn-primary pull-right" style="display:none;" id="admin_update<?=$row['admin_id']?>">Update</button>
                                             </td>
                                             <td><?=($row['admin_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
-                                            <td><a href="<?=ADMIN_URL.'adimins/edit.php?admin_id='.$row['admin_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'admins/edit.php?admin_id='.$row['admin_id']?>" class="btn btn-primary">Edit</a></td>
                                             <td><a href="<?=ADMIN_URL.'admins/delete.php?admin_id='.$row['admin_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
