@@ -48,8 +48,8 @@
                                                 <button class="btn btn-primary pull-right" style="display:none;" id="btn_active<?=$row['user_id']?>">Update</button>
                                             </td>
                                             
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                                            <td><a href="<?=ADMIN_URL.'users/edit.php?user_id='.$row['user_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'users/delete.php?user_id='.$row['user_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>

@@ -36,6 +36,7 @@ $length_constants['user_password'] = 255;
 $length_constants['user_age'] = 3;
 $length_constants['user_phone'] = 20;
 $length_constants['admin_name'] = 30;
+//$length_constants['user_email'] = 100;
 $length_constants['admin_email'] = 100;
 $length_constants['admin_password'] = 255;
 
@@ -44,6 +45,7 @@ foreach ($length_constants as $key => $value) {
 }
 $min_length_constants['user_password'] = 8;
 $min_length_constants['admin_password'] = 8;
+//$min_length_constants['user_name'] 
 foreach ($min_length_constants as $key => $value) {
 	defined(strtoupper('min_'.$key.'_length')) || define(strtoupper('min_'.$key.'_length'), $value);
 }
