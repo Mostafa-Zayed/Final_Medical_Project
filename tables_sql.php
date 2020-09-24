@@ -16,8 +16,8 @@ $sql = "create table if not exists `settings` (
     `setting_id` int(11) unsigned not null primary key auto_increment,
     `setting_name` varchar(100) not null,
     `setting_type` varchar(100) not null,
-    `setting_value` varchar(255) not null,
-    `setting_is_acitve` enum('1','0') not null default '1'
+    `setting_value` varchar(255),
+    `setting_is_active` enum('1','0') not null default '1'
 )";
 
 mysqli_query($connection,$sql);

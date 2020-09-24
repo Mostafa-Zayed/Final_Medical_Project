@@ -36,6 +36,10 @@ $length_constants['user_password'] = 255;
 $length_constants['user_age'] = 3;
 $length_constants['user_phone'] = 20;
 $length_constants['admin_name'] = 30;
+// Settings Constants
+$length_constants['setting_name'] = 100;
+$length_constants['setting_type'] = 100;
+$length_constants['setting_value'] = 255;
 //$length_constants['user_email'] = 100;
 $length_constants['admin_email'] = 100;
 $length_constants['admin_password'] = 255;

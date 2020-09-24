@@ -45,5 +45,25 @@ $(document).ready(function(){
             });
         }
     });
+    
+    // save setting
+    $('td#btnset').click(function(){
+        var tr = $(this).parents('tr').attr('data-id');
+        var btn = $(this).children('button').attr('data-id');
+        //console.log(tr);
+        if(tr == btn) {
+            var input_val = $(this).siblings('td').children('input').val();
+            input_val = input_val.trim();
+            $.ajax({
+                url: "../../ajax/save_setting.php",
+                type: "POST",
+                data: {setting_id:tr,setting_value:input_val},
+                success: function(data){
+                    console.log(data);
+                }
+            });
+        }
         
+        
+    });
 });

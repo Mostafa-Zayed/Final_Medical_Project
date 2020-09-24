@@ -21,7 +21,7 @@
     <li><a href="<?=ADMIN_URL.'offers/view.php';?>"><i class="fa fa-globe"></i> Offers</a></li>
     <li><a href="<?=ADMIN_URL.'features/view.php';?>"><i class="fa fa-globe"></i> Features</a></li>
     <li><a href="<?=ADMIN_URL.'feedbacks/view.php';?>"><i class="fa fa-globe"></i> Feedbacks</a></li>
-    
     <li><a href="<?=ADMIN_URL.'messages/view.php';?>"><i class="fa fa-globe"></i> Messages</a></li>
+    <li><a href="<?=ADMIN_URL.'settings/view.php';?>"><i class="fa fa-globe"></i> Settings</a></li>
     <li><a href="<?=ADMIN_URL.'settings/view.php';?>"><i class="fa fa-globe"></i> Settings</a></li>
 </ul>

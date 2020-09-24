@@ -71,7 +71,7 @@
                                     } 
                                     $data[$input] = $$input;
                                 }
-                                // user_is_active
+                                // user_gender
                                 $input = "user_gender";
                                 if (! is_belongs_to($$input, array('male','female'))) {
                                     $errors[$input] = 'Invalid Gender';

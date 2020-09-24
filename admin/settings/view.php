@@ -25,16 +25,15 @@
                                     </thead>
                                     <tbody>
                                     <?php $rows = get_data('settings'); ?>
-                                    <?php //print_r($rows); ?>
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
-                                            <td><?=$row['setting_id']?></td>
+                                            <td><?=type_count()?></td>
                                             <td><?=ucfirst($row['setting_name'])?></td>
                                             <td><?=$row['setting_value'];?></td>
                                             <td><?=$row['setting_type']?></td>
                                             <td><?=($row['setting_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
-                                            <td><a href="#" class="btn btn-primary">Edit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                                            <td><a href="<?=ADMIN_URL.'settings/edit.php?setting_id='.$row['setting_id']?>" class="btn btn-primary">Edit</a></td>
+                                            <td><a href="<?=ADMIN_URL.'settings/delete.php?setting_id='.$row['setting_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                     </tbody>
