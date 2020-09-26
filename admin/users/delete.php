@@ -1,5 +1,4 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
 <?php
 $input = 'user_id';
 $models = get_models($input);

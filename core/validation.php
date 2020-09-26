@@ -5,6 +5,13 @@ $success = '';
 $errors = array();
 // Array Of Length Constans
 $fixed = array();
+// User
+$length_constants['user_name'] = 100;
+$length_constants['user_email'] = 100;
+$length_constants['user_password'] = 255;
+$length_constants['user_age'] = 3;
+$length_constants['user_phone'] = 20;
+
 $length_constants['country_name'] = 30;
 $length_constants['state_name'] = 30;
 $length_constants['email'] = 100;
@@ -30,11 +37,6 @@ $length_constants['sliderheading'] = 60;
 $length_constants['appointment_name'] = 50;
 $length_constants['appointment_phone'] = 20;
 $length_constants['appointment_email'] = 100;
-$length_constants['user_name'] = 100;
-$length_constants['user_email'] = 100;
-$length_constants['user_password'] = 255;
-$length_constants['user_age'] = 3;
-$length_constants['user_phone'] = 20;
 $length_constants['admin_name'] = 30;
 // Settings Constants
 $length_constants['setting_name'] = 100;
@@ -53,24 +55,7 @@ $min_length_constants['admin_password'] = 8;
 foreach ($min_length_constants as $key => $value) {
 	defined(strtoupper('min_'.$key.'_length')) || define(strtoupper('min_'.$key.'_length'), $value);
 }
-//echo MAX_STATE_NAME_LENGTH;
-// Constant Of MaxEmaillength
-//defined('MAXEMAILLENGTH') || define('MAXEMAILLENGTH',100);
 
-// Constant Of MaxPasswordLength
-//defined('MAXPASSWORDLENGTH') || define('MAXPASSWORDLENGTH',255);
-
-// Constant Of MaxCityNameLength
-//defined('MAXCITYNAMELENGTH') || define('MAXCITYNAMELENGTH',100);
-
-// Constant Of MaxORDERNameLength
-//defined('MAXORDERNAMELENGTH') || define('MAXORDERNAMELENGTH',255);
-
-// Constant Of MaxPhoneLength
-//defined('MAXPHONELENGTH') || define('MAXPHONELENGTH',20);
-
-// Constant Of MaxCountrylength
-//defined('MAXCOUNTRYLENGTH') || define('MAXEMAILLENGTH',30);
 
 /**
 * This Function To Check if The Value Email Or Not
@@ -191,7 +176,18 @@ function uploade_image(array $resource, string $uploade_dir)
     }
 }
 
-
+function clean($resource)
+{
+    if (is_array($resource)) {
+        foreach ($resource as $key => $value) {
+            unset($resource[$key]);
+            $data[trim(htmlspecialchars($key))] = trim(htmlspecialchars($value));
+        }
+    } else {
+        $data = trim(htmlspecialchars($resource));
+    }
+    return $data;
+}
 function pre(array $data)
 {
     echo '<pre>';

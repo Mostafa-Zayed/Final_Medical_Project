@@ -5,63 +5,62 @@
         <div class="col-lg-12">
             <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'cities/add.php'?>"> Add City</a></h4>
             <br>
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Create City</h3>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Create City</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row text-center">
+                        <h2>New City</h2>
                     </div>
-                    <div class="panel-body">
-                            <div class="row text-center">
-                                <h2>New City</h2>
-                            </div>
-                            <br>
-                            <?php if (isset($_POST['submit'])) {
-                                decomposed_array($_POST);
-                                $data = array();
-                                // Validation
-                                // city_name: required, string, max:30
-                                $input = "city_name";
-                                if (! is_required($$input)) {
-                                    $errors[$input] = 'required';
-                                } elseif (! is_string_modified($$input)) {
-                                    $errors[$input] = 'Must be String';
-                                } elseif (! is_not_more_than($$input, MAX_CITY_NAME_LENGTH)) {
-                                    $errors[$input] = 'Must be less than '.MAX_CITY_NAME_LENGTH;
-                                } 
-                                $data[$input] = $$input;
-                                // city_is_active
-                                $input = "city_is_active";
-                                if (! is_belongs_to($$input, array(0, 1))) {
-                                    $errors[$input] = 'Invalid Active Data';
-                                }
-                                $data[$input] = $$input;
-                                // state_id
-                                $input = "state_id";
-                                $$input = (int) $$input;
-                                $check_id = get_data_by_id('states', $$input, 'id');
-                                if (empty($check_id)) {
-                                    $errors[$input] = 'Invalide Country Data';
-                                }
-                                $data[$input] = $$input;
-                                //echo '<pre>';
-                                //print_r($data);
-                                //echo '</pre>';
-                                if (empty($errors)) {  
-                                    $restult = insert_into_table('cities', $data);
-                                    if ($restult) {
-                                        echo '<div class="alert alert-success">Data inserted Succ</div>';
+                    <br>
+                    <?php if (isset($_POST['submit'])) {
+                            unset($_POST['submit']);
+                            decomposed_array($_POST);
+                            $data = array();
+                            // Validation
+                            // city_name    
+                            $input = "city_name";
+                            if (! is_required($$input)) {
+                                $errors[$input] = 'required';
+                            } elseif (! is_string_modified($$input)) {
+                                $errors[$input] = 'Must be String';
+                            } elseif (! is_not_more_than($$input, MAX_CITY_NAME_LENGTH)) {
+                                $errors[$input] = 'Must be less than '.MAX_CITY_NAME_LENGTH;
+                            } 
+                            $data[$input] = $$input;
+                            // city_is_active
+                            $input = "city_is_active";
+                            if (! is_belongs_to($$input, array(0, 1))) {
+                                $errors[$input] = 'Invalid Active Data';
+                            }
+                            $data[$input] = $$input;
+                            // state_id
+                            $input = "state_id";
+                            $$input = (int) $$input;
+                            $check_id = get_data_by_id('states', $$input, 'id');
+                            if (empty($check_id)) {
+                                $errors[$input] = 'Invalide State Data';
+                            }
+                            $data[$input] = $$input;   
+                            if (empty($errors)) {  
+                                $restult = insert_into_table('cities', $data);
+                                if ($restult) {
+                                    $success = '<div class="alert alert-success">City Inserted Succfully</div>';
                                     } else {
-                                        echo 'Error';
+                                        $success = '<div class="alert alert-danger">City NOt Inserted Succfully</div>';
                                     }
                                 }
                             }
                             ?>
+                            <?=(! empty($success)) ? $success : ''?>
                             <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
                             <div class="row">
                             <?php $input = "city_name"; ?>
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">City Name :</label> <?=getError($input); ?>
                                 <div class="col-md-9">
-                                    <input type="text" name="<?=$input?>" class="form-control" id="<?=$input?>" placeholder="Enter State Name">
+                                    <input type="text" name="<?=$input?>" class="form-control" id="<?=$input?>" placeholder="Enter City Name">
                                 </div>
                             </div>
                             </div>

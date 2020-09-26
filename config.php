@@ -26,14 +26,17 @@ defined('WEBSITE_ASSETS') || define('WEBSITE_ASSETS',ROOT.'assets'.DS.'frontend'
 // DASHBOARD ASSETS PATH
 defined('DASHBOARD_ASSETS') || define('DASHBOARD_ASSETS',ROOT.'assets'.DS.'dashboard'.DS);
 
-// INC PATH
+// ADMIN PATH
+defined('ADMIN') || define('ADMIN',ROOT.'admin'.DS);
+
+// INC FRONTEND PATH
 defined('INCLUDES') || define('INCLUDES',ROOT.'includes'.DS);
+
+// INC DASHBOARD PAHT
+defined('ADMIN_INCLUDES') || define('ADMIN_INCLUDES',ADMIN.'includes'.DS);
 
 // CORE PATH
 defined('CORE') || define('CORE',ROOT.'core'.DS);
-
-// ADMIN PATH
-defined('ADMIN') || define('ADMIN',ROOT.'admin'.DS);
 
 // UPLOADS PATH
 defined('UPLOADS') || define('UPLOADS',ROOT.'uploads'.DS);

@@ -24,21 +24,26 @@
 				<h1>Servicing Hours</h1>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.</p>
 				<ul class="time-list">
-					<?php $service_hours = get_data('hours_servicings','where hours_servicing_is_active = 1','day,time');?>
-					<?php foreach ($service_hours as $item) : ?>
-							<li class="d-flex justify-content-between">
-								<span><?=$item['hours_servicing_day']?></span>
-								<span><?=$item['hours_servicing_time']?></span>
-							</li>
-					<?php endforeach; ?>
+				<?php $service_hours = get_data('hours_servicings','where hours_servicing_is_active = 1','day,time');?>
+				<?php foreach ($service_hours as $item) : ?>
+					<li class="d-flex justify-content-between">
+						<span><?=$item['hours_servicing_day']?></span>
+						<span><?=$item['hours_servicing_time']?></span>
+					</li>
+				<?php endforeach; ?>
 				</ul>
 			</div>
 			<?php if (isset($_POST['send'])) {
-						decomposed_array($_POST);
-						$data = array();
-						// appointment_name: required, string, max:50
-						$input = 'appointment_name';
-						if (! is_required($$input)) {
+				//decomposed_array($_POST);
+				//$data = clean($_)
+				// Store Data Here
+				//$data = array();
+				// Validation
+				// appointment_name: required, string, max:50
+				//$data = clean($_POST);
+				//pre($data)
+				$input = 'appointment_name';
+				if (! is_required($$input)) {
 							$errors[$input] = 'required';
 						} elseif (! is_string_modified($$input)) {
 							$errors[$input] = 'Must be String';

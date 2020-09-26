@@ -24,6 +24,6 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <?php require_once "sidebar.php"; ?>
-                <?php require_once "navbar_dashboard.php"; ?>
+                <?php require_once "navbar.php"; ?>
             </div>
         </nav>

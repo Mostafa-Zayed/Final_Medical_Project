@@ -32,7 +32,7 @@ function decomposed_array(array $data): void
 {
 	foreach($data as $key => $value){
 		GLOBAL $$key;
-		 $$key = prepare_input($value);
+		 $$key = $value;
 	 }
 }
 

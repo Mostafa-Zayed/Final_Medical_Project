@@ -37,3 +37,28 @@ function get_models(string $input)
         return $input .= 's';
     }
 }
+
+
+function show_error_required(array $data, array $required)
+{
+    global $errors;
+    foreach ($data as $key => $value)
+    {
+        if (! in_array($key, $required)) {
+            unset($data[$key]);
+        }
+    }
+    $errors = array_map('is_required', $data);
+    foreach ($errors as $key => $value) {
+        if (empty($value)) {
+            $errors[$key] = 'required';
+        } else {
+            unset($errors[$key]);
+        }
+    }
+}
+
+// This Code For enhanced Only 
+//$data = clean($_POST);
+//$fields_required = ['city_name','city_is_active','state_id'];
+//show_error_required($data, $fields_required);
