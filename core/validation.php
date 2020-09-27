@@ -11,7 +11,14 @@ $length_constants['user_email'] = 100;
 $length_constants['user_password'] = 255;
 $length_constants['user_age'] = 3;
 $length_constants['user_phone'] = 20;
-
+// Admin
+$length_constants['admin_name'] = 50;
+$length_constants['admin_email'] = 100;
+$length_constants['admin_password'] = 255;
+$length_constants['admin_image'] = 255;
+// 
+$length_constants['service_type_name'] = 100;
+//
 $length_constants['country_name'] = 30;
 $length_constants['state_name'] = 30;
 $length_constants['email'] = 100;
@@ -19,7 +26,7 @@ $length_constants['password'] = 255;
 $length_constants['city_name'] = 100;
 $length_constants['page_name'] = 20;
 $length_constants['page_link'] = 20;
-$length_constants['service_type_name'] = 30;
+
 $length_constants['department_name'] = 50;
 $length_constants['brand_name'] = 20;
 $length_constants['feature_name'] = 50;
@@ -37,14 +44,13 @@ $length_constants['sliderheading'] = 60;
 $length_constants['appointment_name'] = 50;
 $length_constants['appointment_phone'] = 20;
 $length_constants['appointment_email'] = 100;
-$length_constants['admin_name'] = 30;
+
 // Settings Constants
 $length_constants['setting_name'] = 100;
 $length_constants['setting_type'] = 100;
 $length_constants['setting_value'] = 255;
 //$length_constants['user_email'] = 100;
-$length_constants['admin_email'] = 100;
-$length_constants['admin_password'] = 255;
+
 
 foreach ($length_constants as $key => $value) {
 	defined(strtoupper('max_'.$key.'_length')) || define(strtoupper('max_'.$key.'_length'), $value);

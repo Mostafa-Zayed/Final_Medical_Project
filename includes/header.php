@@ -58,7 +58,7 @@
 			      <div id="logo">
 			        <a href="<?=WEBSITE_URL?>index.php"><img src="<?=WEBSITE_URL;?>assets/frontend/img/logo.png" alt="" title="" /></a>
 			      </div>
-			      <?php include_once "includes/navbar.php"; ?>
+			      <?php include_once INCLUDES."navbar.php"; ?>
 		    	</div>
 		    </div>
 		  </header><!-- #header -->

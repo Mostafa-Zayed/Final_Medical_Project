@@ -38,6 +38,8 @@ $(document).ready(function(){
                     type: "POST",
                     data: {models:models,active:active,id:select_id},
                     success: function(data){
+                        console.log(data);
+                        $('#message').css('display','block');
                         $('#message').html(data);
                     }
                 });

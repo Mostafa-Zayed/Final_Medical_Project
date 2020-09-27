@@ -243,14 +243,32 @@ mysqli_query($connection,$sql);
 // Admins Table
 $sql = "create table if not exists `admins` (
     `admin_id` int(11) unsigned not null primary key auto_increment,
-    `admin_name` varchar(30) not null,
-    `admin_email` varchar(255) not null,
+    `admin_name` varchar(50) not null,
+    `admin_email` varchar(100) not null,
     `admin_password` varchar(255) not null,
     `admin_image` varchar(255),
     `admin_type` enum('admin','super_admin') default('admin'),
-    `admin_is_active` enum('0','1') default('1'),
+    `admin_is_active` enum('0','1') default('0'),
     `admin_is_created_at` timestamp default current_timestamp
 )";
 
 mysqli_query($connection,$sql);
+
+// Admins Table
+$sql = "create table if not exists `mailings` (
+    `mailing_id` int(11) unsigned not null primary key auto_increment,
+    `mailing_email` varchar(100) not null
+)";
+
+mysqli_query($connection,$sql);
+
+// Admins Table
+$sql = "create table if not exists `subscribes` (
+    `subscribe_id` int(11) unsigned not null primary key auto_increment,
+    `subscribe_email` varchar(100) not null
+)";
+
+mysqli_query($connection,$sql);
+
+
 ?>

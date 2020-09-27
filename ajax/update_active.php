@@ -14,8 +14,8 @@ $data = array(
 
 $updated = medical_update($models, $data, "`$column` = $id");
 if ($updated) {
-    echo "<div class='alert alert-success'>Admin Updated Succfuly</div";
+    echo "<div class='alert alert-success'> Status Updated Succfuly</div>";
 } else {
-    echo "<div class='alert alert-danger'>Admin Not Updated Succfuly</div";
+    echo "<div class='alert alert-danger'> Status Not Updated Succfuly</div>";
 }
 ?>

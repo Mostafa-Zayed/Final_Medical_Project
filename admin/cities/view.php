@@ -27,7 +27,7 @@
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
                                             <td><?=type_count()?></td>
-                                            <td><?=ucfirst($row['city_name'])?></td>
+                                            <td><a href="<?=ADMIN_URL.'appointments/view.php?city_id='.$row['city_id']?>"><?=ucfirst($row['city_name'])?></a></td>
                                             <td><?=($row['city_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
                                             <td><?=$row['state_id']?></td>
                                             <td><a href="<?=ADMIN_URL.'cities/edit.php?city_id='.$row['city_id']?>" class="btn btn-primary">Edit</a></td>

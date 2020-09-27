@@ -1,5 +1,5 @@
 <?php require_once 'globals.php'; ?>
-<?php include_once "includes/header.php"; ?>
+<?php include_once INCLUDES."header.php"; ?>
 <!-- start banner Area -->
 <section class="banner-area relative" id="home">
 	<div class="overlay overlay-bg"></div>	
@@ -34,7 +34,8 @@
 				</ul>
 			</div>
 			<?php if (isset($_POST['send'])) {
-				//decomposed_array($_POST);
+				unset($_POST['submit']);
+				decomposed_array(clean($_POST));
 				//$data = clean($_)
 				// Store Data Here
 				//$data = array();
@@ -432,5 +433,5 @@
 		</div>
 	</div>
 </section>
-		    <!-- End brands Area -->
-			<?php include_once "includes/footer.php"; ?>
+<!-- End brands Area -->
+<?php include_once INCLUDES."footer.php"; ?>

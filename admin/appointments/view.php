@@ -1,5 +1,10 @@
 <?php require_once "../../globals.php"; ?>
 <?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php if (isset($_GET['city_id']) && ! empty($_GET['city_id']) && is_numeric($_GET['city_id'])) {
+    $city_id =  (int) $_GET['city_id']; 
+    $tables = array('appointments','cities');
+}
+?>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -26,7 +31,12 @@
                                     <th>DELETE</th>
                                 </thead>
                                 <tbody>
-                                    <?php $rows = get_data('appointments'); ?>
+                                <?php if (isset($city_id)){
+                                        $rows = get_data_join($tables, "appointments.city_id = $city_id");
+                                    } else {
+                                        $rows = get_data('appointments'); 
+                                    }
+                                ?>
                                     <?php foreach ($rows as $row): ?>
                                     <tr>
                                         <td><?=type_count()?></td>

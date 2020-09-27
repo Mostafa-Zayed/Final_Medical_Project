@@ -195,4 +195,26 @@ function get_table_count_where(string $table, string $where)
     $result = mysqli_query($connection, $sql);
     return mysqli_fetch_assoc($result)['rows_count'];
 }
+
+function get_data_join(array $tables_name, $where)
+{
+   global $connection;
+   $count = count($tables_name);
+   $sql = "SELECT * FROM ";
+   for($i = 0; $i < $count; $i++) {
+       $sql .= "`$tables_name[$i]` ";
+       if ($i < $count -1 ) {
+           $sql .= " INNER JOIN ";
+       }
+   }
+   $sql .= "ON $where ";
+   //echo $sql;
+   $result = @mysqli_query($connection, $sql);
+    if (!$result) {
+        return array();
+    }
+    $data = @mysqli_fetch_all($result,MYSQLI_ASSOC);
+    @mysqli_free_result($result);
+    return $data;
+}
 ?>

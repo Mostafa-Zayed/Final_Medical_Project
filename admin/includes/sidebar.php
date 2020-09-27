@@ -1,7 +1,9 @@
 <ul class="nav navbar-nav side-nav">
     <li class="active"><a href="<?=ADMIN_URL.'index.php'?>"><i class="fa fa-bullseye"></i> Dashboard</a></li>
     <li><a href="<?=ADMIN_URL.'users/view.php';?>"><i class="fa fa-globe"></i> Users</a></li>
+    <?php if (permision_super_admin()): ?>
     <li><a href="<?=ADMIN_URL.'admins/view.php';?>"><i class="fa fa-globe"></i> Admins</a></li>
+    <?php endif; ?>
     <li><a href="<?=ADMIN_URL.'countries/view.php';?>"><i class="fa fa-tasks"></i> Countries</a></li>
     <li><a href="<?=ADMIN_URL.'states/view.php';?>"><i class="fa fa-globe"></i> States</a></li>
     <li><a href="<?=ADMIN_URL.'cities/view.php';?>"><i class="fa fa-globe"></i> Cities</a></li>

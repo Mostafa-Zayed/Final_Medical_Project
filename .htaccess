@@ -1,6 +1,6 @@
 RewriteEngine on
 
-#RewriteRule ^config.php index.php
+RewriteRule ^config.php index.php
 #RewriteRule ^globals.php index.php
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

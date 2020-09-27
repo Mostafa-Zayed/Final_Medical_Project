@@ -112,6 +112,7 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                             uploade_image($_FILES, 'users');
                             unlink($path);
                         }
+                        uploade_image($_FILES, 'users');
                         $restult = medical_update($models, $data, "`user_id` = $user_id");
                         if ($restult) {
                             $success = '<div class="alert alert-success">User Updated Succefuly</div>';
