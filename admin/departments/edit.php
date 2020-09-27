@@ -1,5 +1,6 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php is_not_admin(); ?>
+<?php require_once ADMIN_INCLUDES."header.php"; ?>
 <?php
 $input = 'department_id';
 $models = get_models($input);
@@ -16,7 +17,7 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.$models.'/edit.php?'.$input.'= '.$$input?>"> Update Department</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard</a> / <a href="<?=ADMIN_URL.$models.'/view.php'?>"> Departments </a> / <a href="<?=ADMIN_URL.$models.'/edit.php?'.$input.'= '.$$input?>"> Update Department</a></h4>
             <br>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -28,10 +29,11 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                             </div>
                             <br>
                             <?php if (isset($_POST['submit'])) {
-                                decomposed_array($_POST);
+                                unset($_POST['submit']);
+                                decomposed_array(clean($_POST));
                                 $data = array();
                                 // Validation
-                                // feature_name: required, string, max:30
+                                // feature_name: required, string, max:50
                                 $input = 'department_name';
                                 if (! is_required($$input)) {
                                     $errors[$input] = 'required';
@@ -41,13 +43,15 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                                     $errors[$input] = 'Must be less than '.MAX_DEPARTMENT_NAME_LENGTH.' Characters';
                                 } 
                                 $data[$input] = $$input;
-                                // department_description: required, string, max:30
+                                // department_description: required, string, max:500
                                 $input = "department_description";
                                 if (! is_required($$input)) {
                                     $errors[$input] = 'required';
                                 } elseif (! is_string_modified($$input)) {
                                     $errors[$input] = 'Must be String';
-                                } 
+                                } elseif (! is_not_more_than($$input, MAX_DEPARTMENT_DESCRIPTION_LENGTH)) {
+                                    $errors[$input] = 'Must be less than '.Max_DEPARTMENT_DESCRIPTION_LENGTH;
+                                }
                                 $data[$input] = $$input;
                                 // department_is_active
                                 $input = "department_is_active";
@@ -59,13 +63,16 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                                 if (! empty($_FILES) && ! empty($_FILES[$input]['name'])) {
                                     image_validation($_FILES,'png,jpg,jpeg',5);
                                     $data[$input] = basename($_FILES[$input]['name']);
-                                    $path = UPLOADS.'departments'.DS.$old_image;
+                                    if (isset($old_image)) {
+                                        $path = UPLOADS.'departments'.DS.$old_image;
+                                    }
                                 }
                                 if (empty($errors)) {
                                     if (isset($path) && !empty($path)) {
                                         uploade_image($_FILES, 'departments');
                                         unlink($path);
                                     }
+                                    uploade_image($_FILES, 'departments');
                                     $restult = medical_update($models, $data, "`department_id` = $department_id");
                                     if ($restult) {
                                         $success = '<div class="alert alert-success">Department Updated Succefuly</div>';
@@ -127,10 +134,16 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                             <?php $input = 'old_image'; ?>
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Department Image:</label>
+                                <?php if (!empty($row['department_image'])): ?>
                                 <div class='col-md-9'>
                                     <input type="hidden" name="<?=$input?>" value="<?=$row['department_image']?>">
                                     <img src="<?=WEBSITE_URL.'uploads'.DS.'departments'.DS.$row['department_image']?>" width="70%">;
                                 </div>
+                                <?php else: ?>
+                                    <div class='col-md-9'>
+                                    <div class="alert alert-warning"> No Image Yet</div>
+                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <br>
@@ -149,4 +162,4 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
         </div>
     </div>
 </div>
-<?php require_once INCLUDES."footer_dashboard.php"; ?>
+<?php require_once ADMIN_INCLUDES."footer.php"; ?>

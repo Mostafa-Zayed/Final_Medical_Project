@@ -48,6 +48,59 @@ $(document).ready(function(){
         }
     });
     
+    // Update Country 
+    $('select#country').change(function(){
+        var tr_id = $(this).parents('tr').attr('data-id');
+        var models = $(this).parents('tr').attr('data-mod');
+        var state_id= $(this).attr('data-id');
+        if (state_id == tr_id) {
+            var country_id = $(this).parents('tr').attr('data-country');
+            var country = $(this).val();
+            if (country != country_id){
+                var btn = $('#btn_country'+state_id).css('display','block');    
+                var country_id = btn.siblings('select').val();
+                models = models.trim();
+                btn.click(function(){
+                    $.ajax({
+                        url: "../../ajax/country_active.php",
+                        type: "POST",
+                        data: {models:models,country_id:country_id,state_id:state_id},
+                        success: function(data){
+                            $('#message').css('display','block');
+                            $('#message').html(data);
+                        }
+                    });
+                });   
+            }
+        }
+    });
+
+    // Update State 
+    $('select#state').change(function(){
+        var tr_id = $(this).parents('tr').attr('data-id');
+        var models = $(this).parents('tr').attr('data-mod');
+        var city_id= $(this).attr('data-id');
+        if (city_id == tr_id) {
+            var state_id = $(this).parents('tr').attr('data-state');
+            var state = $(this).val();
+            if (state_id != state){
+                var btn = $('#btn_state'+city_id).css('display','block');    
+                var state_id = btn.siblings('select').val();
+                models = models.trim();
+                btn.click(function(){
+                    $.ajax({
+                        url: "../../ajax/state_update.php",
+                        type: "POST",
+                        data: {models:models,state_id:state_id,city_id:city_id},
+                        success: function(data){
+                            $('#message').css('display','block');
+                            $('#message').html(data);
+                        }
+                    });
+                });   
+            }
+        }
+    });
     // save setting
     $('td#btnset').click(function(){
         var tr = $(this).parents('tr').attr('data-id');

@@ -18,19 +18,28 @@ $length_constants['admin_password'] = 255;
 $length_constants['admin_image'] = 255;
 // 
 $length_constants['service_type_name'] = 100;
-//
+// Countries
 $length_constants['country_name'] = 30;
+//
 $length_constants['state_name'] = 30;
 $length_constants['email'] = 100;
 $length_constants['password'] = 255;
-$length_constants['city_name'] = 100;
+// Cities
+$length_constants['city_name'] = 30;
 $length_constants['page_name'] = 20;
 $length_constants['page_link'] = 20;
-
+// Departments
 $length_constants['department_name'] = 50;
-$length_constants['brand_name'] = 20;
+$length_constants['department_description'] = 500;
+$length_constants['department_image'] = 255;
+// Brands
+$length_constants['brand_name'] = 50;
+$length_constants['brand_description'] = 255;
+// Features
 $length_constants['feature_name'] = 50;
 $length_constants['feature_icon'] = 50;
+$length_constants['feature_description'] = 300;
+//
 $length_constants['doctor_name'] = 50;
 $length_constants['doctor_phone'] = 20;
 $length_constants['doctor_address'] = 150;

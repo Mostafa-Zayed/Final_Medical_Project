@@ -1,5 +1,9 @@
 <?php require_once 'globals.php'; ?>
-<?php include_once "includes/header.php"; ?>
+<?php if (check_auth()) {
+    redirect('index');
+}
+?>
+<?php include_once INCLUDES."header.php"; ?>
 <?php 
 if (isset($_POST['submit'])) {
     decomposed_array($_POST);
@@ -87,4 +91,4 @@ if (isset($_POST['submit'])) {
 </div>
 <br>
 <br>
-<?php include_once "includes/footer.php"; ?>
+<?php include_once INCLUDES."footer.php"; ?>

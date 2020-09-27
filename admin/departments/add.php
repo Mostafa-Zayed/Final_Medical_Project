@@ -1,9 +1,10 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php is_not_admin(); ?>
+<?php require_once ADMIN_INCLUDES."header.php"; ?>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'departments/add.php'?>"> Add Department</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard</a> / <a href="<?=ADMIN_URL.'departments/view.php'?>"> Departments </a> / <a href="<?=ADMIN_URL.'departments/add.php'?>"> Add Department</a></h4>
             <br>
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -15,10 +16,11 @@
                     </div>
                     <br>
                     <?php if (isset($_POST['submit'])) {
-                        decomposed_array($_POST);
+                        unset($_POST['submit']);
+                        decomposed_array(clean($_POST));
                         $data = array();
                         // Validation
-                        // department_name: required, string, max:30
+                        // department_name: required, string, max:50
                         $input = "department_name";
                         if (! is_required($$input)) {
                             $errors[$input] = 'required';
@@ -28,13 +30,15 @@
                             $errors[$input] = 'Must be less than '.MAX_DEPARTMENT_NAME_LENGTH;
                         } 
                         $data[$input] = $$input;
-                        // department_description: required, string, max:30
+                        // department_description: required, string, max:500
                         $input = "department_description";
                         if (! is_required($$input)) {
                             $errors[$input] = 'required';
                         } elseif (! is_string_modified($$input)) {
                             $errors[$input] = 'Must be String';
-                        } 
+                        } elseif (! is_not_more_than($$input, MAX_DEPARTMENT_DESCRIPTION_LENGTH)) {
+                            $errors[$input] = 'Must be less than '.Max_DEPARTMENT_DESCRIPTION_LENGTH;
+                        }
                         $data[$input] = $$input;
                         // department_is_active
                         $input = "department_is_active";
@@ -42,23 +46,24 @@
                             $errors[$input] = 'Invalid Active Data';
                         }
                         $data[$input] = $$input;
-                        if (! empty($_FILES)) {
-                            $input = 'department_image';
+                        // department_image
+                        $input = 'department_image';
+                        if (! empty($_FILES) && ! empty($_FILES[$input]['name'])) {
                             image_validation($_FILES,'png,jpg,jpeg',5);
-                            //$data[$input] = ROOT.'uploads'.DS.'departments'.DS.$_FILES[$input]['name'];
                             $data[$input] = basename($_FILES[$input]['name']);
                         }
                         if (empty($errors)) {
                             uploade_image($_FILES, 'departments');
                             $restult = insert_into_table('departments', $data);
                             if ($restult) {
-                                echo '<div class="alert alert-success">Department inserted Succ</div>';
-                            } else {
-                                echo 'Error';
+                                $success = '<div class="alert alert-success">Department Inserted Succfully</div>';
+                                } else {
+                                    $success = '<div class="alert alert-danger">Department NOt Inserted Succfully</div>';
                             }
                         }
                     }
                     ?>
+                    <?=(! empty($success)) ? $success : ''?>
                     <form action="<?=$_SERVER['PHP_SELF']?>" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <?php $input = "department_name"; ?>
@@ -120,4 +125,4 @@
         </div>
     </div>
 </div>
-<?php require_once INCLUDES."footer_dashboard.php"; ?>
+<?php require_once ADMIN_INCLUDES."footer.php"; ?>

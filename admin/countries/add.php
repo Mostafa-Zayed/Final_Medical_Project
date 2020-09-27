@@ -1,9 +1,10 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php is_not_admin(); ?>
+<?php require_once ADMIN_INCLUDES."header.php"; ?>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'countries/add.php'?>"> Add Country</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard</a> / <a href="<?=ADMIN_URL.'countries/view.php'?>"> Countries </a> / <a href="<?=ADMIN_URL.'countries/add.php'?>"> Add Country</a></h4>
             <br>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -15,7 +16,9 @@
                             </div>
                             <br>
                             <?php if (isset($_POST['submit'])) {
-                                decomposed_array($_POST);
+                                unset($_POST['submit']);
+                                decomposed_array(clean($_POST));
+                                $data = array();
                                 // Validation
                                 // country_name: required, string, max:30
                                 $input = 'country_name';
@@ -26,24 +29,23 @@
                                 } elseif (! is_not_more_than($$input, MAX_COUNTRY_NAME_LENGTH)) {
                                     $errors[$input] = 'Must be less than '.MAX_COUNTRY_NAME_LENGTH.' Characters';
                                 } 
+                                $data[$input] = $$input;
                                 $input = 'country_is_active';
                                 if (! is_belongs_to($$input, array(0,1))) {
                                     $errors[$input] = 'Invalid Active Data';
                                 }
+                                $data[$input] = $$input;
                                 if (empty($errors)) {
-                                    $data = array(
-                                        'country_name' => $country_name,
-                                        'country_is_active' => $country_is_active
-                                    );
                                     $restult = insert_into_table('countries', $data);
                                     if ($restult) {
-                                        echo '<div class="alert alert-success">Data inserted Succ</div>';
-                                    } else {
-                                        echo 'Error';
+                                        $success = '<div class="alert alert-success">Admin Inserted Succfully</div>';
+                                } else {
+                                    $success = '<div class="alert alert-danger">Admin NOt Inserted Succfully</div>';
                                     }
                                 }
                             }
                             ?>
+                            <?=(! empty($success)) ? $success : ''?>
                             <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
                             <div class="row">
                             <div class="form-group">

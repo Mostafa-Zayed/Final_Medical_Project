@@ -26,7 +26,7 @@
             <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
             <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
             <li class="divider"></li>
-            <form id="my_form" method="post" action="<?=WEBSITE_URL.'logout.php'?>" style="inline;">
+            <form id="my_form" method="post" action="<?=ADMIN_URL.'auth/logout.php'?>" style="inline;">
                 <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-power-off"></i> &nbsp;<input type="submit" name='logout' value="Logout" class="btn btn-primary"></li>        
             </form>
         </ul>

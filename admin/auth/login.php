@@ -1,4 +1,8 @@
 <?php require_once '../../globals.php'; ?>
+<?php if (check_auth_admin()) {
+    redirect('admin/index');
+}
+?>
 <?php include_once INCLUDES."header.php"; ?>
 <?php
 if (isset($_POST['submit'])) {
@@ -85,7 +89,7 @@ if (isset($_POST['submit'])) {
 				</div>
                 <br>
                 <button type="submit" class="primary-btn text-uppercase" name="submit">Login</button>
-                <!--<a href="#" class="primary-btn text-uppercase">Post Comment</a>-->
+                
             </form>
         </div>
     </div>

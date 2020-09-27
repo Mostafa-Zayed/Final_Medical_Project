@@ -1,5 +1,6 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php is_not_admin(); ?>
+<?php require_once ADMIN_INCLUDES."header.php"; ?>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -26,12 +27,19 @@
                                     <tbody>
                                     <?php $rows = get_data('features'); ?>
                                     <?php foreach ($rows as $row): ?>
-                                        <tr>
+                                        <tr data-id="<?=$row['feature_id']?>" data-mod="features">
                                             <td><?=type_count()?></td>
                                             <td><?=$row['feature_icon']?></td>
                                             <td><?=ucfirst($row['feature_name'])?></td>
                                             <td><?=$row['feature_description']?></td>
-                                            <td><?=($row['feature_is_active'] == 1) ? 'Active' : 'Not Active';?></td>
+                                            <td>
+                                                <select class="form-control" data-id="<?=$row['feature_id']?>" id="active">
+                                                    <option value="1" <?=($row['feature_is_active'] == 1) ? 'selected' : ''?>>Active</option>
+                                                    <option value="0" <?=($row['feature_is_active'] == 0) ? 'selected' : ''?>>Not Active</option>
+                                                </select>
+                                            <br>
+                                            <button class="btn btn-primary pull-right" style="display:none;" id="btn_active<?=$row['feature_id']?>">Update</button>
+                                        </td>
                                             <td><a href="<?=ADMIN_URL.'features/edit.php?feature_id='.$row['feature_id']?>" class="btn btn-primary">Edit</a></td>
                                             <td><a href="<?=ADMIN_URL.'features/delete.php?feature_id='.$row['feature_id']?>" class="btn btn-danger">Delete</a></td>
                                         </tr>
@@ -44,4 +52,4 @@
                 </div>
                 </div>
             </div>
-<?php require_once INCLUDES."footer_dashboard.php"; ?>
+<?php require_once ADMIN_INCLUDES."footer.php"; ?>

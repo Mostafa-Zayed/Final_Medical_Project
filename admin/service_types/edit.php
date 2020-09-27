@@ -1,4 +1,5 @@
 <?php require_once "../../globals.php"; ?>
+<?php is_not_admin(); ?>
 <?php require_once ADMIN_INCLUDES."header.php"; ?>
 <?php
 $input = 'service_type_id';
@@ -16,7 +17,7 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'service_types/view.php'?>">Service Types</a> / <a href="<?=ADMIN_URL.$models.'/edit.php?'.$input.'= '.$$input?>"> Update Service Type</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard</a> / <a href="<?=ADMIN_URL.$models.'/view.php'?>">Service Types</a> / <a href="<?=ADMIN_URL.$models.'/edit.php?'.$input.'= '.$$input?>"> Update Service Type</a></h4>
             <br>
             <div class="panel panel-primary">
                 <div class="panel-heading">

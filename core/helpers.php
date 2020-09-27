@@ -58,6 +58,14 @@ function show_error_required(array $data, array $required)
     }
 }
 
+function delete_file(string $path) {
+
+    if (file_exists($path)) {
+        unlink($path);
+    } else {
+        return false;
+    }
+}
 // This Code For enhanced Only 
 //$data = clean($_POST);
 //$fields_required = ['city_name','city_is_active','state_id'];

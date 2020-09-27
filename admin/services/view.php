@@ -1,11 +1,13 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php is_not_admin(); ?>
+<?php require_once ADMIN_INCLUDES."header.php"; ?>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                     <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'services/view.php'?>">Services</a><a href="<?=ADMIN_URL.'services/add.php';?>" class="btn btn-primary pull-right">ADD SERVICE</a></h4>
                     <br>
                     <div class="col-lg-12">
+                    <div id="message"></div>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Services</h3>
@@ -42,4 +44,4 @@
                 </div>
                 </div>
             </div>
-<?php require_once INCLUDES."footer_dashboard.php"; ?>
+<?php require_once ADMIN_INCLUDES."footer.php"; ?>

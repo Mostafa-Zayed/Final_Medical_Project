@@ -1,4 +1,5 @@
 <?php require_once "../../globals.php"; ?>
+<?php is_not_admin(); ?>
 <?php
 $input = 'service_type_id';
 $models = get_models($input);

@@ -1,4 +1,5 @@
 <?php require_once "../../globals.php"; ?>
+<?php is_not_admin(); ?>
 <?php require_once ADMIN_INCLUDES."header.php"; ?>
 <div id="page-wrapper">
     <div class="row">

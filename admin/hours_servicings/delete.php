@@ -1,5 +1,6 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php is_not_admin(); ?>
+<?php require_once ADMIN_INCLUDES."header.php"; ?>
 <?php
 $input = 'hours_servicing_id';
 $models = get_models($input);

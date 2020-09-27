@@ -1,5 +1,6 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php is_not_admin(); ?>
+<?php require_once ADMIN_INCLUDES."header.php"; ?>
 <?php
 $input = 'brand_id';
 $models = get_models($input);
@@ -16,7 +17,7 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.$models.'/edit.php?'.$input.'= '.$$input?>"> Update Brand</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'brands/view.php'?>"> Brands </a> / <a href="<?=ADMIN_URL.$models.'/edit.php?'.$input.'= '.$$input?>"> Update Brand</a></h4>
             <br>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -28,7 +29,8 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                             </div>
                             <br>
                             <?php if (isset($_POST['submit'])) {
-                                decomposed_array($_POST);
+                                unset($_POST['submit']);
+                                decomposed_array(clean($_POST));
                                 $data = array();
                                 // Validation
                                 // brand_name: required, string, max:30
@@ -41,14 +43,16 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                                     $errors[$input] = 'Must be less than '.MAX_BRAND_NAME_LENGTH;
                                 } 
                                 $data[$input] = $$input;
-                                // brand_description: required, string, max:30
+                                // brand_description: string, max:255
                                 $input = "brand_description";
-                                if (! is_required($$input)) {
-                                    $errors[$input] = 'required';
-                                } elseif (! is_string_modified($$input)) {
-                                    $errors[$input] = 'Must be String';
-                                } 
-                                $data[$input] = $$input;
+                                if (! empty($$input)) {
+                                    if (! is_string_modified($$input)) {
+                                        $errors[$input] = 'Must be String';
+                                    } elseif (! is_not_more_than($$input, MAX_BRAND_DESCRIPTION_LENGTH)) {
+                                        $errors[$input] = 'Must be less than '.MAX_BRAND_DESCRIPTION_LENGTH;
+                                    }
+                                    $data[$input] = $$input;
+                                }
                                 // brand_is_active
                                 $input = "brand_is_active";
                                 if (! is_belongs_to($$input, array(0, 1))) {
@@ -59,13 +63,16 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                                 if (! empty($_FILES) && ! empty($_FILES[$input]['name'])) {
                                     image_validation($_FILES,'png,jpg,jpeg',5);
                                     $data[$input] = basename($_FILES[$input]['name']);
-                                    $path = UPLOADS.'brands'.DS.$old_image;
+                                    if (isset($old_image)){
+                                        $path = UPLOADS.'brands'.DS.$old_image;
+                                    }
                                 }
                                 if (empty($errors)) {
                                     if (isset($path) && !empty($path)) {
                                         uploade_image($_FILES, 'brands');
                                         unlink($path);
                                     }
+                                    uploade_image($_FILES, 'brands');
                                     $restult = medical_update($models, $data, "`brand_id` = $brand_id");
                                     if ($restult) {
                                         $success = '<div class="alert alert-success">Brand Updated Succefuly</div>';
@@ -127,10 +134,16 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                             <?php $input = 'old_image'; ?>
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Brand Image:</label>
+                                <?php if (!empty($row['brand_image'])): ?>
                                 <div class='col-md-9'>
                                     <input type="hidden" name="<?=$input?>" value="<?=$row['brand_image']?>">
                                     <img src="<?=WEBSITE_URL.'uploads'.DS.'brands'.DS.$row['brand_image']?>" width="70%">;
                                 </div>
+                                <?php else: ?>
+                                    <div class='col-md-9'>
+                                    <div class="alert alert-warning"> No Image Yet</div>
+                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <br>
@@ -149,4 +162,4 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
         </div>
     </div>
 </div>
-<?php require_once INCLUDES."footer_dashboard.php"; ?>
+<?php require_once ADMIN_INCLUDES."footer.php"; ?>

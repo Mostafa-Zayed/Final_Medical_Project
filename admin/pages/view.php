@@ -1,9 +1,10 @@
 <?php require_once "../../globals.php"; ?>
+<?php is_not_admin(); ?>
 <?php require_once ADMIN_INCLUDES."header.php"; ?>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'pages/view.php'?>">Pages</a><a href="<?=ADMIN_URL.'pages/add.php';?>" class="btn btn-primary pull-right">ADD PAGE</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index">Dashboard</a> / <a href="<?=ADMIN_URL.'pages/view'?>">Pages</a><a href="<?=ADMIN_URL.'pages/add';?>" class="btn btn-primary pull-right">ADD PAGE</a></h4>
             <br>
             <div class="col-lg-12">
                 <div class="panel panel-primary">

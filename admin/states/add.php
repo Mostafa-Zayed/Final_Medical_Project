@@ -1,9 +1,10 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php is_not_admin(); ?>
+<?php require_once ADMIN_INCLUDES."header.php"; ?>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'states/add.php'?>"> Add State</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'states/view.php'?>">States</a> / <a href="<?=ADMIN_URL.'states/add.php'?>"> Add State</a></h4>
             <br>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -15,7 +16,8 @@
                             </div>
                             <br>
                             <?php if (isset($_POST['submit'])) {
-                                decomposed_array($_POST);
+                                unset($_POST['submit']);
+                                decomposed_array(clean($_POST));
                                 $data = array();
                                 // Validation
                                 // state_name: required, string, max:30
@@ -39,19 +41,20 @@
                                 $$input = (int) $$input;
                                 $check_id = get_data_by_id('countries', $$input, 'id');
                                 if (empty($check_id)) {
-                                    $errors[$input] = 'Invalide Country Data';
+                                    $errors[$input] = 'Invalid Country Data';
                                 }
                                 $data[$input] = $$input;
                                 if (empty($errors)) {
                                     $restult = insert_into_table('states', $data);
                                     if ($restult) {
-                                        echo '<div class="alert alert-success">Data inserted Succ</div>';
+                                        $success = '<div class="alert alert-success">State Inserted Succfully</div>';
                                     } else {
-                                        echo 'Error';
+                                        $success = '<div class="alert alert-danger">State NOt Inserted Succfully</div>';
                                     }
                                 }
                             }
                             ?>
+                            <?=(! empty($success)) ? $success : ''?>
                             <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
                             <div class="row">
                             <?php $input = "state_name"; ?>
@@ -109,4 +112,4 @@
         </div>
     </div>
 </div>
-<?php require_once INCLUDES."footer_dashboard.php"; ?>
+<?php require_once ADMIN_INCLUDES."footer.php"; ?>
