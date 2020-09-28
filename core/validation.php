@@ -39,8 +39,9 @@ $length_constants['brand_description'] = 255;
 $length_constants['feature_name'] = 50;
 $length_constants['feature_icon'] = 50;
 $length_constants['feature_description'] = 300;
-//
+// Doctors
 $length_constants['doctor_name'] = 50;
+$length_constants['doctor_image'] = 255;
 $length_constants['doctor_phone'] = 20;
 $length_constants['doctor_address'] = 150;
 $length_constants['doctor_facebook'] = 255;
@@ -50,6 +51,7 @@ $length_constants['hours_servicing_day'] = 50;
 $length_constants['hours_servicing_time'] = 50;
 $length_constants['service_name'] = 100;
 $length_constants['sliderheading'] = 60;
+// Appointments
 $length_constants['appointment_name'] = 50;
 $length_constants['appointment_phone'] = 20;
 $length_constants['appointment_email'] = 100;

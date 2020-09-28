@@ -4,7 +4,8 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'brands/view.php'?>">Brands</a><a href="<?=ADMIN_URL.'brands/add.php';?>" class="btn btn-primary pull-right">ADD BRAND</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'brands/view.php'?>">Brands</a><a href="<?=ADMIN_URL.'brands/add.php';?>" class="btn btn-primary pull-right">ADD BRAND &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+</a></h4>
             <br>
             <div class="col-lg-12">
                 <div id="message"></div>

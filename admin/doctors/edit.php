@@ -1,18 +1,32 @@
 <?php require_once "../../globals.php"; ?>
 <?php is_not_admin(); ?>
+<?php
+$input = 'doctor_id';
+$models = get_models($input);
+if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input])) {
+    $doctor_id =  (int) $_GET[$input];    
+    $row = get_one($models, "`$input` = $doctor_id");
+    if (empty($row)) {
+        abort();
+    }
+} else {
+    redirect('admin/'.$models.'/view.php');
+}
+?>
 <?php require_once ADMIN_INCLUDES."header.php"; ?>
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index">Dashboard</a> / <a href="<?=ADMIN_URL.'doctors/view'?>"> Doctors </a> / <a href="<?=ADMIN_URL.'doctors/add'?>"> Add Doctor</a></h4>
+            <div id="message"></div>
+            <h4><a href="<?=ADMIN_URL?>index">Dashboard</a> / <a href="<?=ADMIN_URL.$models.'/view'?>"> Doctors </a> / <a href="<?=ADMIN_URL.$models.'/add'?>"> Update Doctor</a></h4>
             <br>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Create Doctors</h3>
+                        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Edit Doctors</h3>
                     </div>
                     <div class="panel-body">
                             <div class="row text-center">
-                                <h2>New Doctors</h2>
+                                <h2> Edit Doctors</h2>
                             </div>
                             <br>
                             <?php if (isset($_POST['submit'])) {
@@ -97,26 +111,34 @@
                                 if (! empty($_FILES) && !empty($_FILES[$input]['name'])) {
                                     image_validation($_FILES,'png,jpg,jpeg',5);
                                     $data[$input] = basename($_FILES[$input]['name']);
+                                    if (isset($old_image)){
+                                        $path = UPLOADS.'doctors'.DS.$old_image;
+                                    }
                                 }
                                 if (empty($errors)) {
+                                    if (isset($path) && !empty($path)) {
+                                        uploade_image($_FILES, 'doctors');
+                                        unlink($path);
+                                    }
                                     uploade_image($_FILES, 'doctors');
-                                    $restult = insert_into_table('doctors', $data);
+                                    $restult = medical_update($models, $data, "`doctor_id` = $doctor_id");
                                     if ($restult) {
-                                        $success = '<div class="alert alert-success">Doctor Inserted Succfully</div>';
+                                        $success = '<div class="alert alert-success">Doctor Updated Succfully</div>';
+                                        $row = get_one($models, '`doctor_id` = '.$doctor_id);
                                     } else {
-                                    $success = '<div class="alert alert-danger">Doctor NOt Inserted Succfully</div>';
+                                    $success = '<div class="alert alert-danger">Doctor NOt Updated Succfully</div>';
                                     }
                                 }
                             }
                             ?>
                             <?=(! empty($success)) ? $success : ''?>
-                            <form action="<?=$_SERVER['PHP_SELF']?>" method="post" enctype="multipart/form-data">
+                            <form action="" method="post" enctype="multipart/form-data">
                             <div class="row">
                             <?php $input = "doctor_name"; ?>
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Doctor Name :</label> <?=getError($input); ?>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="<?=$input?>" placeholder="Enter State Name" name="<?=$input?>">
+                                    <input type="text" class="form-control" id="<?=$input?>" value="<?=$row[$input]?>" name="<?=$input?>">
                                 </div>
                             </div>
                             </div>
@@ -126,7 +148,7 @@
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Doctor Phone :</label> <?=getError($input); ?>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="<?=$input?>" placeholder="Enter State Name" name="<?=$input?>">
+                                    <input type="text" class="form-control" id="<?=$input?>" value="<?=$row[$input]?>" name="<?=$input?>">
                                 </div>
                             </div>
                             </div>
@@ -136,7 +158,7 @@
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Doctor Address :</label> <?=getError($input); ?>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="<?=$input?>" placeholder="Enter State Name" name="<?=$input?>">
+                                    <input type="text" class="form-control" id="<?=$input?>" value="<?=$row[$input]?>" name="<?=$input?>">
                                 </div>
                             </div>
                             </div>
@@ -146,7 +168,7 @@
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Doctor Facebook :</label> <?=getError($input); ?>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="<?=$input?>" placeholder="Enter State Name" name="<?=$input?>">
+                                    <input type="link" class="form-control" id="<?=$input?>" value="<?=$row[$input]?>" name="<?=$input?>">
                                 </div>
                             </div>
                             </div>
@@ -156,7 +178,7 @@
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Doctor Twitter :</label> <?=getError($input); ?>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="<?=$input?>" placeholder="Enter State Name" name="<?=$input?>">
+                                    <input type="link" class="form-control" id="<?=$input?>" value="<?=$row[$input]?>" name="<?=$input?>">
                                 </div>
                             </div>
                             </div>
@@ -166,7 +188,7 @@
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Doctor Instgram :</label> <?=getError($input); ?>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="<?=$input?>" placeholder="Enter State Name" name="<?=$input?>">
+                                    <input type="link" class="form-control" id="<?=$input?>" value="<?=$row[$input]?>" name="<?=$input?>">
                                 </div>
                             </div>
                             </div>
@@ -177,8 +199,8 @@
                                 <label for="<?=$input?>" class="col-md-2">Doctor Is Show:</label> <?=getError($input); ?>
                                 <div class="col-md-9">
                                     <select name="<?=$input?>" id="<?=$input?>" class="form-control">
-                                        <option value="1">Visiable</option>
-                                        <option value="0" selected>Hidden</option>
+                                        <option value="1" <?=isset($row[$input]) && $row[$input] == '1' ? 'selected' : ''?>>Visiable</option>
+                                        <option value="0" <?=isset($row[$input]) && $row[$input] == '0' ? 'selected' : ''?>>Hidden</option>
                                     </select>
                                 </div>            
                             </div>       
@@ -190,8 +212,8 @@
                                 <label for="<?=$input?>" class="col-md-2">Doctor Is active:</label> <?=getError($input); ?>
                                 <div class="col-md-9">
                                     <select name="<?=$input?>" id="<?=$input?>" class="form-control">
-                                        <option value="1" selected>Active</option>
-                                        <option value="0">Not Active</option>
+                                        <option value="1" <?=isset($row[$input]) && $row[$input] == '1' ? 'selected' : ''?>>Active</option>
+                                        <option value="0" <?=isset($row[$input]) && $row[$input] == '0' ? 'selected' : ''?>>Not Active</option>
                                     </select>
                                 </div>            
                             </div>       
@@ -203,11 +225,11 @@
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Department Name:</label> <?=getError($input); ?>
                                 <div class="col-md-9">
-                                <?php $rows = get_data('departments','','id,name'); ?>
+                                <?php $departments = get_data('departments','','id,name'); ?>
                                     <select name="<?=$input?>" id="<?=$input?>" class="form-control">
-                                        <option value="" selected>Select Department</option>
-                                        <?php foreach ($rows as $row): ?>
-                                        <option value="<?=$row['department_id']?>"><?=$row['department_name']?></option>
+                                        <option value="" >Select Department</option>
+                                        <?php foreach ($departments as $department): ?>
+                                        <option value="<?=$department['department_id']?>" <?=($department[$input] == $row[$input]) ? 'selected' : ''?>><?=ucfirst($department['department_name'])?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>            
@@ -225,11 +247,28 @@
                             </div>       
                         </div>
                         <br>
+                        <div class="row">
+                        <?php $input = 'old_image'; ?>
+                            <div class="form-group">
+                                <label for="<?=$input?>" class="col-md-2">Old Image:</label>
+                                <?php if (!empty($row['doctor_image'])): ?>
+                                <div class='col-md-9'>
+                                    <input type="hidden" name="<?=$input?>" value="<?=$row['doctor_image']?>">
+                                    <img src="<?=WEBSITE_URL.'uploads'.DS.'doctors'.DS.$row['doctor_image']?>" width="70%">;
+                                </div>
+                                <?php else: ?>
+                                <div class='col-md-9'>
+                                    <div class="alert alert-warning"> No Image Yet</div>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <br>
                             <div class="row">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-10">
-                                    <button type="submit" class="btn btn-info" name="submit">Create</button>
+                                    <button type="submit" class="btn btn-info" name="submit">Update </button>
                                 </div>
                                 </div>
                             </div>

@@ -47,6 +47,32 @@ $(document).ready(function(){
             });
         }
     });
+
+    // Update doctor show
+        // update Active 
+        $('select#show').change(function(){
+            var select_id = $(this).attr('data-id');
+            var tr_id = $(this).parents('tr').attr('data-id');
+            var models = $(this).parents('tr').attr('data-mod');
+            if (select_id == tr_id) {
+                var btn = $('#btn_show'+select_id).css('display','block');
+                btn.click(function(){
+                    var active = btn.siblings('select').val();
+                    models = models.trim();
+                    $.ajax({
+                        url: "../../ajax/doctor_show.php",
+                        type: "POST",
+                        data: {models:models,active:active,id:select_id},
+                        success: function(data){
+                            console.log(data);
+                            $('#message').css('display','block');
+                            $('#message').html(data);
+                        }
+                    });
+                    
+                });
+            }
+        });
     
     // Update Country 
     $('select#country').change(function(){
@@ -101,6 +127,36 @@ $(document).ready(function(){
             }
         }
     });
+
+    // Update Department
+    // Update State 
+    $('select#department').change(function(){
+        var tr_id = $(this).parents('tr').attr('data-id');
+        var models = $(this).parents('tr').attr('data-mod');
+        var doctor_id= $(this).attr('data-id');
+        if (doctor_id == tr_id) {
+            var department_id = $(this).parents('tr').attr('data-department');
+            var department = $(this).val();
+            if (department_id != department){
+                var btn = $('#btn_department'+doctor_id).css('display','block');    
+                var department_id = btn.siblings('select').val();
+                models = models.trim();
+                btn.click(function(){
+                    $.ajax({
+                        url: "../../ajax/department_update.php",
+                        type: "POST",
+                        data: {models:models,department_id:department_id,doctor_id:doctor_id},
+                        success: function(data){
+                            $('#message').css('display','block');
+                            $('#message').html(data);
+                        }
+                    });
+                });   
+            }
+        }
+    });
+
+
     // save setting
     $('td#btnset').click(function(){
         var tr = $(this).parents('tr').attr('data-id');

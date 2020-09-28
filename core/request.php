@@ -38,6 +38,6 @@ function decomposed_array(array $data): void
 
 function abort()
 {
-	redirect('admin/404.php');
+	redirect('404');
 }
 ?>

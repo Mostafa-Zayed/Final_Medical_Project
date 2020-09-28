@@ -69,12 +69,12 @@ mysqli_query($connection,$sql);
 
 // Services Table
 $sql = "create table if not exists `services` (
-    `service_id` integer(11) unsigned not null primary key auto_increment,
+    `service_id` int(11) unsigned not null primary key auto_increment,
     `service_name` varchar(30) not null,
     `service_type_id` int(11) unsigned,
     `service_has_doctor` enum('1','0') not null default '0',
     `service_is_active` enum('1','0') not null default '1',
-    constraint foreign key(service_type) references service_types(service_type_id) ON DELETE SET NULL ON UPDATE CASCADE
+    constraint foreign key(service_type_id) references service_types(service_type_id) ON DELETE SET NULL ON UPDATE CASCADE
 )";
 
 mysqli_query($connection,$sql);
@@ -125,12 +125,12 @@ mysqli_query($connection,$sql);
 $sql = "create table if not exists `doctors` (
     `doctor_id` int(11) unsigned not null primary key auto_increment,
     `doctor_name` varchar(50) not null,
-    `doctor_image` varchar(255) not null,
-    `doctor_phone` varchar(20) not null,
-    `doctor_address` varchar(150) not null,
-    `doctor_facebook` varchar(255) not null,
-    `doctor_twitter` varchar(255) not null,
-    `doctor_instgram` varchar(255) not null,
+    `doctor_image` varchar(255),
+    `doctor_phone` varchar(20),
+    `doctor_address` varchar(150),
+    `doctor_facebook` varchar(255),
+    `doctor_twitter` varchar(255),
+    `doctor_instgram` varchar(255),
     `department_id` int(11) unsigned,
     `doctor_is_show` enum('1','0') not null default '0',
     `doctor_is_active` enum('1','0') not null default '1',
@@ -152,14 +152,15 @@ $sql = "create table if not exists `appointments` (
     `appointment_is_created_at` timestamp default current_timestamp,
     `service_id` int(11) unsigned,
     `doctor_id` int(11) unsigned,
-    `country_id` int(11) unsigned not null,
-    `state_id` int(11) unsigned not null,
-    `city_id` int(11) unsigned not null,
-    constraint fk_services_service_id foreign key(service_id) references services(service_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    constraint fk_doctors_doctor_id foreign key(doctor_id) references doctors(doctor_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    constraint  foreign key (country_id) references countries(country_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    constraint  foreign key (state_id) references states(state_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    constraint  foreign key (city_id) references cities(city_id) ON DELETE SET NULL ON UPDATE CASCADE   
+    `country_id` int(11) unsigned,
+    `state_id` int(11) unsigned,
+    `city_id` int(11) unsigned,
+    constraint  foreign key(doctor_id) references doctors(doctor_id) ON DELETE SET NULL ON UPDATE CASCADE,
+    constraint  foreign key(service_id) references services(service_id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (`country_id`) REFERENCES `countries`(`country_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (`state_id`) REFERENCES `states`(`state_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (`city_id`) REFERENCES `cities`(`city_id`) ON DELETE SET NULL ON UPDATE CASCADE
+    
 )";
 
 mysqli_query($connection,$sql);
@@ -254,21 +255,38 @@ $sql = "create table if not exists `admins` (
 
 mysqli_query($connection,$sql);
 
-// Admins Table
-$sql = "create table if not exists `mailings` (
-    `mailing_id` int(11) unsigned not null primary key auto_increment,
-    `mailing_email` varchar(100) not null
+// Abouts Table
+$sql = "create table if not exists `abouts` (
+    `about_id` int(11) unsigned not null primary key auto_increment,
+    `about_heading` varchar(255) not null,
+    `about_slug` varchar(150) not null,
+    `about_title` varchar(255) not null,
+    `about_description` text not null,
+    `about_image` varchar(255),
+    `about_video` varchar(255),
+    `about_is_active` enum('0','1') default('0')
 )";
 
 mysqli_query($connection,$sql);
 
-// Admins Table
-$sql = "create table if not exists `subscribes` (
-    `subscribe_id` int(11) unsigned not null primary key auto_increment,
-    `subscribe_email` varchar(100) not null
+// Questions Table
+$sql = "create table if not exists `questions` (
+    `question_id` int(11) unsigned not null primary key auto_increment,
+    `question_content` varchar(255) not null,
+    `question_is_active` enum('0','1') default('0')
 )";
 
 mysqli_query($connection,$sql);
 
+// Answers Table
+$sql = "create table if not exists `answers` (
+    `answer_id` int(11) unsigned not null primary key auto_increment,
+    `answer_content` varchar(255) not null,
+    `question_id` int(11) unsigned not null,
+    `answer_is_active` enum('0','1') default('0'),
+    CONSTRAINT FOREIGN KEY (`question_id`) REFERENCES `questions`(`question_id`) ON DELETE CASCADE ON UPDATE CASCADE
+)";
+
+mysqli_query($connection,$sql);
 
 ?>

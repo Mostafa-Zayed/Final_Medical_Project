@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="<?=WEBSITE_URL;?>assets/dashboard/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="<?=WEBSITE_URL;?>/assets/dashboard/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="<?=WEBSITE_URL;?>/assets/dashboard/css/local.css" />
+    <link rel="stylesheet" href="<?=WEBSITE_URL;?>assets/frontend/css/jquery-ui.css">
 
 </head>
 <body>

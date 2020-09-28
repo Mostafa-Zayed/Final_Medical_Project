@@ -1,4 +1,5 @@
 <?php require_once "../../globals.php"; ?>
+<?php is_not_admin(); ?>
 <?php require_once ADMIN_INCLUDES."header.php"; ?>
 <?php
 $input = 'page_id';
@@ -6,7 +7,7 @@ $models = get_models($input);
 if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input])) {
     $page_id = $_GET[$input];
     $page_id = (int) $page_id;
-    $row = get_one('pages', "`page_id` = $page_id");
+    $row = get_one($models, "`$input` = $page_id");
     if (empty($row)) {
         abort();
     }
@@ -17,7 +18,7 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard</a> / <a href="<?=ADMIN_URL.'pages/view.php'?>"> Pages </a> / <a href="<?=ADMIN_URL.'pages/edit.php?page_id='.$page_id?>"> Update Page</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index.php">Dashboard</a> / <a href="<?=ADMIN_URL.$models.'/view.php'?>"> Pages </a> / <a href="<?=ADMIN_URL.$models.'/edit.php?page_id='.$page_id?>"> Update Page</a></h4>
             <br>
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -122,4 +123,4 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
         </div>
     </div>
 </div>
-<?php require_once INCLUDES."footer_dashboard.php"; ?>
+<?php require_once ADMIN_INCLUDES."footer.php"; ?>

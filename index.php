@@ -34,95 +34,90 @@
 				</ul>
 			</div>
 			<?php if (isset($_POST['send'])) {
-				unset($_POST['submit']);
+				unset($_POST['send']);
 				decomposed_array(clean($_POST));
-				//$data = clean($_)
-				// Store Data Here
-				//$data = array();
-				// Validation
+				$data = array();
 				// appointment_name: required, string, max:50
-				//$data = clean($_POST);
-				//pre($data)
 				$input = 'appointment_name';
 				if (! is_required($$input)) {
-							$errors[$input] = 'required';
-						} elseif (! is_string_modified($$input)) {
-							$errors[$input] = 'Must be String';
-						} elseif (! is_not_more_than($$input, MAX_APPOINTMENT_NAME_LENGTH)) {
-							$errors[$input] = 'Must be less than '.MAX_APPOINTMENT_NAME_LENGTH.' Characters';
-						}
-						$data[$input] = $$input;
-							// appointment_phone: required, string, max:20
-							$input = 'appointment_phone';
-							if (! is_required($$input)) {
-								$errors[$input] = 'required';
-							} elseif (! is_string_modified($$input)) {
-								$errors[$input] = 'Must be String';
-							} elseif (! is_not_more_than($$input, MAX_APPOINTMENT_PHONE_LENGTH)) {
-								$errors[$input] = 'Must be less than '.MAX_APPOINTMENT_PHONE_LENGTH.' Characters';
-							}
-							$data[$input] = $$input;
-							// appointment_email: required, string, max:100, email
-							$input = 'appointment_email';
-							if (! is_required($$input)) {
-								$errors[$input] = 'required';
-							} elseif (! is_string_modified($$input)) {
-								$errors[$input] = 'Must be String';
-							} elseif (! is_not_more_than($$input, MAX_APPOINTMENT_EMAIL_LENGTH)) {
-								$errors[$input] = 'Must be less than '.MAX_APPOINTMENT_EMAIL_LENGTH.' Characters';
-							} elseif (! is_email($$input)) {
-								$errors[$input] = 'Must be Email!!';
-							}
-							$data[$input] = $$input;
-							// appointment_date_birth: required
-							$input = 'appointment_date_birth';
-							if (! is_required($$input)) {
-								$errors[$input] = 'required';
-							}
-							$data[$input] = $$input;
-							// service_id: required
-							$input = 'service_id';
-							if (! is_required($$input)) {
-								$errors[$input] = 'Please Select Service ';
-							}
-							$$input = (int) $$input;
-                            $check_id = get_data_by_id('services', $$input, 'id');
-                            if (empty($check_id)) {
-                                $errors[$input] = 'Invalide Service Name';
-							}
-							$data[$input] = $$input;
-							// doctor_id
-							$input = 'doctor_id';
-							if (isset($$input)) {
-								$$input = (int) $$input;
-								$check_id = get_data_by_id('doctors', $$input, 'id');
-                            	if (empty($check_id)) {
-                                	$errors[$input] = 'Invalide Doctor Name';
-								}
-								$data[$input] = $$input;
-							}
-							// country_id: required
-							$input = 'country_id';
-							$$input = (int) $$input;
-							if (! is_required($$input)) {
-								$errors[$input] = 'Please Select Country ';
-							}
-							$check_id = get_data_by_id('countries', $$input, 'id');
-                            if (empty($check_id)) {
-                                $errors[$input] = 'Invalide Country Name';
-							}
-							$data[$input] = $$input;
-							// state_id: required
-							$input = 'state_id';
-							$$input = (int) $$input;
-							if (! is_required($$input)) {
-								$errors[$input] = 'Please Select State ';
-							}
-							$check_id = get_data_by_id('states', $$input, 'id');
-                            if (empty($check_id)) {
-                                $errors[$input] = 'Invalide State Name';
-							}
-							$data[$input] = $$input;
+					$errors[$input] = 'required';
+				} elseif (! is_string_modified($$input)) {
+					$errors[$input] = 'Must be String';
+				} elseif (! is_not_more_than($$input, MAX_APPOINTMENT_NAME_LENGTH)) {
+					$errors[$input] = 'Must be less than '.MAX_APPOINTMENT_NAME_LENGTH.' Characters';
+				}
+				$data[$input] = $$input;
+				// appointment_phone: required, string, max:20
+				$input = 'appointment_phone';
+				if (! is_required($$input)) {
+					$errors[$input] = 'required';
+				} elseif (! is_string_modified($$input)) {
+					$errors[$input] = 'Must be String';
+				} elseif (! is_not_more_than($$input, MAX_APPOINTMENT_PHONE_LENGTH)) {
+					$errors[$input] = 'Must be less than '.MAX_APPOINTMENT_PHONE_LENGTH.' Characters';
+				}
+				$data[$input] = $$input;
+				// appointment_email: required, string, max:100, email
+				$input = 'appointment_email';
+				if (! is_required($$input)) {
+					$errors[$input] = 'required';
+				} elseif (! is_string_modified($$input)) {
+					$errors[$input] = 'Must be String';
+				} elseif (! is_not_more_than($$input, MAX_APPOINTMENT_EMAIL_LENGTH)) {
+					$errors[$input] = 'Must be less than '.MAX_APPOINTMENT_EMAIL_LENGTH.' Characters';
+				} elseif (! is_email($$input)) {
+					$errors[$input] = 'Must be Email!!';
+				}
+				$data[$input] = $$input;
+				// appointment_date_birth: required
+				$input = 'appointment_date_birth';
+				if (! is_required($$input)) {
+					$errors[$input] = 'required';
+				}
+				$data[$input] = $$input;
+				// service_id: required
+				$input = 'service_id';
+				if (! is_required($$input)) {
+					$errors[$input] = 'Please Select Service ';
+				}
+				$$input = (int) $$input;
+                $check_id = get_data_by_id('services', $$input, 'id');
+                if (empty($check_id)) {
+                    $errors[$input] = 'Invalide Service Name';
+				}
+				$data[$input] = $$input;
+				// doctor_id
+				$input = 'doctor_id';
+				if (isset($$input)) {
+					$$input = (int) $$input;
+					$check_id = get_data_by_id('doctors', $$input, 'id');
+                    if (empty($check_id)) {
+                        $errors[$input] = 'Invalide Doctor Name';
+					}
+					$data[$input] = $$input;
+				}
+				// country_id: required
+				$input = 'country_id';
+				$$input = (int) $$input;
+				if (! is_required($$input)) {
+					$errors[$input] = 'Please Select Country ';
+				}
+				$check_id = get_data_by_id('countries', $$input, 'id');
+                if (empty($check_id)) {
+                    $errors[$input] = 'Invalide Country Name';
+				}
+				$data[$input] = $$input;
+				// state_id: required
+				$input = 'state_id';
+				$$input = (int) $$input;
+				if (! is_required($$input)) {
+					$errors[$input] = 'Please Select State ';
+				}
+				$check_id = get_data_by_id('states', $$input, 'id');
+                if (empty($check_id)) {
+                    $errors[$input] = 'Invalide State Name';
+				}
+				$data[$input] = $$input;
 							// city_id: required
 							$input = 'city_id';
 							$$input = (int) $$input;
@@ -149,7 +144,7 @@
 								$data[$input] = $$input;
 							}
 							if (empty($errors)) {
-								//pre($data);
+								
 								$restult = insert_into_table('appointments', $data);
                             if ($restult) {
                                 $success = '<div class="alert alert-success">Your Appointment is Sended Succfult Please Wait Us To Confirm Appointment With You</div>';
