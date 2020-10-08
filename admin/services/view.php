@@ -18,6 +18,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <th>ID</th>
+                                        <th>IMAGE</th>
                                         <th>NAME</th>
                                         <th>TYPE</th>
                                         <th>ACTIVE</th>
@@ -29,6 +30,14 @@
                                     <?php foreach ($rows as $row): ?>
                                         <tr>
                                             <td><?=type_count()?></td>
+                                            <td><?php
+                                                if (! empty($row['service_image'])) {
+                                                    echo '<img src="'.WEBSITE_URL.'uploads'.DS.'services'.DS.$row['service_image'].'" width="100px" height="100px">';
+                                                } else {
+                                                    echo 'NO Image';
+                                                }
+                                                ?>
+                                            </td>
                                             <td><?=ucfirst($row['service_name'])?></td>
                                             <td><?=$row['service_type_id']?></td>
                                             <td><?=($row['service_is_active'] == 1) ? 'Active' : 'Not Active';?></td>

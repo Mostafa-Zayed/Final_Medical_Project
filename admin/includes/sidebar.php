@@ -50,8 +50,8 @@
  Brands</a></li>
     
     
-    <li><a href="<?=ADMIN_URL.'sliders/view.php';?>"><i class="fa fa-globe"></i> Sliders</a></li>
-    
+    <li><a href="<?=ADMIN_URL.'questions/view.php';?>"><i class="fa fa-globe"></i> Questions</a></li>
+    <li><a href="<?=ADMIN_URL.'abouts/view.php';?>"><i class="fa fa-globe"></i> Abouts</a></li>
     
     <li><a href="<?=ADMIN_URL.'hours_servicings/view.php';?>"><i class="fa fa-globe"></i> Servicing Hours</a></li>
     <li><a href="<?=ADMIN_URL.'offers/view.php';?>"><i class="fa fa-globe"></i> Offers</a></li>
@@ -61,5 +61,12 @@
  Messages</a></li>
     <li><a href="<?=ADMIN_URL.'settings/view.php';?>"><i class="fa fa-cog" aria-hidden="true"></i> &nbsp; 
  Settings</a></li>
+    <li><a href="<?=ADMIN_URL.'answers/view.php';?>"><i class="fa fa-globe"></i> Answers</a></li>
     <li><a href="<?=ADMIN_URL.'settings/view.php';?>"><i class="fa fa-globe"></i> Settings</a></li>
+    <li><a href="<?=ADMIN_URL.'settings/view.php';?>"><i class="fa fa-globe"></i> Settings</a></li>
+    <li><a href="<?=ADMIN_URL.'settings/view.php';?>"><i class="fa fa-globe"></i> Settings</a></li>
+    <li><a href="<?=ADMIN_URL.'settings/view.php';?>"><i class="fa fa-globe"></i> Settings</a></li>
+    <br>
+    <br>
+    <br>
 </ul>

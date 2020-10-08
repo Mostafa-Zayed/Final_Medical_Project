@@ -41,8 +41,12 @@ defined('CORE') || define('CORE',ROOT.'core'.DS);
 // UPLOADS PATH
 defined('UPLOADS') || define('UPLOADS',ROOT.'uploads'.DS);
 
+
 // WEBSITE URL LINK
 defined('WEBSITE_URL') || define('WEBSITE_URL','http://'.$_SERVER['HTTP_HOST'].DS.'medical_test'.DS);
+
+// UPLOADE_URL
+defined('UPLOADE_URL') || define('UPLOADE_URL',WEBSITE_URL.'uploads/');
 
 // ADMIDN URL LINK
 defined('ADMIN_URL') || define('ADMIN_URL',WEBSITE_URL.'admin'.DS);

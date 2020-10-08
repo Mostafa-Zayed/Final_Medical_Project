@@ -1,9 +1,10 @@
 <?php require_once "../../globals.php"; ?>
-<?php require_once INCLUDES."header_dashboard.php"; ?>
+<?php is_not_admin(); ?>
+<?php require_once ADMIN_INCLUDES."header.php"; ?>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4><a href="<?=ADMIN_URL?>index.php">Dashboard<a> / <a href="<?=ADMIN_URL.'cities/view.php'?>">Cities</a><a href="<?=ADMIN_URL.'cities/add.php';?>" class="btn btn-primary pull-right">ADD CITY</a></h4>
+                    <h4><a href="<?=ADMIN_URL?>index">Dashboard</a> / <a href="<?=ADMIN_URL.'offers/view'?>">Offers</a><a href="<?=ADMIN_URL.'offers/add.php';?>" class="btn btn-primary pull-right">ADD OFFER &nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a></h4>
                     <br>
                     <div class="col-lg-12">
                     <div class="panel panel-primary">

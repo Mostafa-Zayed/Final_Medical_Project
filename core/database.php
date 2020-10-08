@@ -208,7 +208,7 @@ function get_data_join(array $tables_name, $where)
        }
    }
    $sql .= "ON $where ";
-   //echo $sql;
+   //return  $sql;
    $result = @mysqli_query($connection, $sql);
     if (!$result) {
         return array();

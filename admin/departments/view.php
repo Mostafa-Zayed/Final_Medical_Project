@@ -39,7 +39,7 @@
                                                 ?>
                                             </td>
                                             <td><?=ucfirst($row['department_name'])?></td>
-                                            <td><?=$row['department_description']?></td>
+                                            <td width="40%"><?=$row['department_description']?></td>
                                             <td>
                                             <select class="form-control" data-id="<?=$row['department_id']?>" id="active">
                                                 <option value="1" <?=($row['department_is_active'] == 1) ? 'selected' : ''?>>Active</option>

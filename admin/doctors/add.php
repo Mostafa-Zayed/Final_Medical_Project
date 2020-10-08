@@ -92,19 +92,38 @@
                                     }
                                     $data[$input] = $$input;
                                 }
+                                // doctor_is_rating
+                                $input = "doctor_is_rating";
+                                if (! is_belongs_to($$input, array(0, 1))) {
+                                    $errors[$input] = 'Invalid Rating Data';
+                                }
+                                $data[$input] = $$input;
+                                // doctor_video_link
+                                $input = 'doctor_video_link';
+                                if (! empty($$input)) {
+                                    if (! is_string_modified($$input)) {
+                                        $errors[$input] = 'Must be String';
+                                    } elseif (! is_not_more_than($$input, MAX_DOCTOR_VIDEO_LINK_LENGTH)) {
+                                        $errors[$input] = 'Must be less than '.MAX_DOCTOR_VIDEO_LINK_LENGTH;
+                                    }  elseif (! is_url($$input)) {
+                                        $errors[$input] = 'Must be Link ';
+                                    }
+                                    $data[$input] = $$input;
+                                }
                                 // doctor_image
                                 $input = 'doctor_image';
                                 if (! empty($_FILES) && !empty($_FILES[$input]['name'])) {
                                     image_validation($_FILES,'png,jpg,jpeg',5);
                                     $data[$input] = basename($_FILES[$input]['name']);
                                 }
+
                                 if (empty($errors)) {
                                     uploade_image($_FILES, 'doctors');
                                     $restult = insert_into_table('doctors', $data);
                                     if ($restult) {
                                         $success = '<div class="alert alert-success">Doctor Inserted Succfully</div>';
                                     } else {
-                                    $success = '<div class="alert alert-danger">Doctor NOt Inserted Succfully</div>';
+                                        $success = '<div class="alert alert-danger">Doctor NOt Inserted Succfully</div>';
                                     }
                                 }
                             }
@@ -216,6 +235,20 @@
                             <br>
                             <br>
                             <div class="row">
+                                <?php $input = "doctor_is_rating"; ?>
+                                    <div class="form-group">
+                                        <label for="<?=$input?>" class="col-md-2">Doctor Rating:</label> <?=getError($input); ?>
+                                        <div class="col-md-9">
+                                            <select name="<?=$input?>" id="<?=$input?>" class="form-control">
+                                                <option value="0" selected>NO Rating</option>
+                                                <option value="1">Rating</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            <br>
+                            <div class="row">
                             <?php $input = "doctor_image"; ?>
                             <div class="form-group">
                                 <label for="<?=$input?>" class="col-md-2">Doctor Image:</label> <?=getError($input); ?>
@@ -225,6 +258,16 @@
                             </div>       
                         </div>
                         <br>
+                                <div class="row">
+                                    <?php $input = "doctor_video_link"; ?>
+                                    <div class="form-group">
+                                        <label for="<?=$input?>" class="col-md-2">Doctor Video Link:</label> <?=getError($input); ?>
+                                        <div class="col-md-9">
+                                            <input type="url" name="<?=$input?>" id="<?=$input?>" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
                             <div class="row">
                             <div class="form-group">
                                 <div class="col-md-2"></div>

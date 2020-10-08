@@ -96,6 +96,12 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                                     $errors[$input] = 'Invalid Active Data';
                                 }
                                 $data[$input] = $$input;
+                                // doctor_is_rating
+                                $input = "doctor_is_rating";
+                                if (! is_belongs_to($$input, array(0, 1))) {
+                                    $errors[$input] = 'Invalid Rating Data';
+                                }
+                                $data[$input] = $$input;
                                 // department_name 
                                 $input = "department_id";
                                 if (! empty($$input)) {
@@ -216,7 +222,7 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                                         <option value="0" <?=isset($row[$input]) && $row[$input] == '0' ? 'selected' : ''?>>Not Active</option>
                                     </select>
                                 </div>            
-                            </div>       
+                            </div>
                             </div>
                             <br>
                             <br>
@@ -236,6 +242,20 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                             </div>       
                             </div>
                             <br>
+                            <br>
+                                <div class="row">
+                                    <?php $input = "doctor_is_rating"; ?>
+                                    <div class="form-group">
+                                        <label for="<?=$input?>" class="col-md-2">Doctor Is Rating:</label> <?=getError($input); ?>
+                                        <div class="col-md-9">
+                                            <select name="<?=$input?>" id="<?=$input?>" class="form-control">
+                                                <option value="1" <?=isset($row[$input]) && $row[$input] == '1' ? 'selected' : ''?>>Rating</option>
+                                                <option value="0" <?=isset($row[$input]) && $row[$input] == '0' ? 'selected' : ''?>>Not Rating</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
                             <br>
                             <div class="row">
                             <?php $input = "doctor_image"; ?>

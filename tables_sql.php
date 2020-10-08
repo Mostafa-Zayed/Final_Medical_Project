@@ -73,7 +73,10 @@ $sql = "create table if not exists `services` (
     `service_name` varchar(30) not null,
     `service_type_id` int(11) unsigned,
     `service_has_doctor` enum('1','0') not null default '0',
+    `service_image` varchar(255),
     `service_is_active` enum('1','0') not null default '1',
+    `service_is_rating` enum('1','0') not null default '0',
+    `service_video_link` varchar(255),
     constraint foreign key(service_type_id) references service_types(service_type_id) ON DELETE SET NULL ON UPDATE CASCADE
 )";
 
@@ -134,6 +137,8 @@ $sql = "create table if not exists `doctors` (
     `department_id` int(11) unsigned,
     `doctor_is_show` enum('1','0') not null default '0',
     `doctor_is_active` enum('1','0') not null default '1',
+    `doctor_is_rating` enum('1','0') not null default '0',
+    `doctor_video_link` varchar(255),
     constraint fk_departmens_department_id foreign key(department_id) references departments(department_id) ON DELETE SET NULL ON UPDATE CASCADE
 )";
 
@@ -190,32 +195,31 @@ mysqli_query($connection,$sql);
 $sql = "create table if not exists `offers` (
     `offer_id` int(11) unsigned not null primary key auto_increment,
     `offer_name` varchar(100) not null,
-    `feature_description` text not null,
+    `offer_description` text not null,
     `offer_image` varchar(255) not null,
     `offer_start_date` varchar(255) not null,
     `offer_end_date` varchar(255) not null,
-    `offer_descound` varchar(5) not null,
-    `offer_is_acitve` enum('1','0') not null default '1'
+    `offer_descound` int(3) default 0,
+    `offer_is_active` enum('1','0') not null default '0'
 )";
 
 mysqli_query($connection,$sql);
 
 // Feedbacks Table
-//$sql = "create table if not exists `feedbacks` (
-  //  `feedback_id` int(11) unsigned not null primary key auto_increment,
-    //`feedback_content` text not null,
-    //`feedback_rate` enum('0','1','2','3','4','5') default '0',
-    //`feedback_video_link` varchar(255),
-    //`feedback_is_active` enum('0','1') default '0',
-    //`user_id` int(11) unsigned not null,
-    //`service_id` int(11) unsigned,
-    //`doctor_id` int(11) unsigned,
-    //constraint  foreign key(user_id) references users(user_id),
-    //constraint  foreign key(service_id) references services(service_id),
-    //constraint  foreign key(doctor_id) references doctors(doctor_id) 
-//)";
+$sql = "create table if not exists `feedbacks` (
+    `feedback_id` int(11) unsigned not null primary key auto_increment,
+    `feedback_name` varchar (50) not null,
+    `feedback_content` text not null,
+    `feedback_rate` enum('1','2','3','4','5') not null, 
+    `service_id` int(11) unsigned,
+    `doctor_id` int(11) unsigned,
+    `feedback_is_show` enum('0','1') not null default '0',
+    constraint  foreign key(service_id) references services(service_id) ON DELETE SET NULL ON UPDATE CASCADE,
+    constraint  foreign key(doctor_id) references doctors(doctor_id) ON DELETE SET NULL ON UPDATE CASCADE
 
-//mysqli_query($connection,$sql);
+)";
+
+mysqli_query($connection,$sql);
 
 // Brand Table
 $sql = "create table if not exists `brands` (
@@ -263,8 +267,8 @@ $sql = "create table if not exists `abouts` (
     `about_title` varchar(255) not null,
     `about_description` text not null,
     `about_image` varchar(255),
-    `about_video` varchar(255),
-    `about_is_active` enum('0','1') default('0')
+    `about_video_link` varchar(255),
+    `about_is_active` enum('0','1') default '0'
 )";
 
 mysqli_query($connection,$sql);
@@ -281,7 +285,7 @@ mysqli_query($connection,$sql);
 // Answers Table
 $sql = "create table if not exists `answers` (
     `answer_id` int(11) unsigned not null primary key auto_increment,
-    `answer_content` varchar(255) not null,
+    `answer_content` text not null,
     `question_id` int(11) unsigned not null,
     `answer_is_active` enum('0','1') default('0'),
     CONSTRAINT FOREIGN KEY (`question_id`) REFERENCES `questions`(`question_id`) ON DELETE CASCADE ON UPDATE CASCADE

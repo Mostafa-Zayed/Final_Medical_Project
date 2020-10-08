@@ -58,18 +58,39 @@
                                     $errors[$input] = 'Invalide Service Type Data';
                                 }
                                 $data[$input] = $$input;
+                                // service_video_link
+                                $input = 'service_video_link';
+                                if (! empty($$input)) {
+                                    if (! is_string_modified($$input)) {
+                                        $errors[$input] = 'Must be String';
+                                    } elseif (! is_not_more_than($$input, MAX_SERVICE_VIDEO_LINK_LENGTH)) {
+                                        $errors[$input] = 'Must be less than '.MAX_SERVICE_VIDEO_LINK_LENGTH;
+                                    }  elseif (! is_url($$input)) {
+                                        $errors[$input] = 'Must be Link ';
+                                    }
+                                    $data[$input] = $$input;
+                                }
+                                // service_image
+                                $input = 'service_image';
+                                if (! empty($_FILES) && !empty($_FILES[$input]['name'])) {
+                                    image_validation($_FILES,'png,jpg,jpeg',5);
+                                    $data[$input] = basename($_FILES[$input]['name']);
+                                }
                                 if (empty($errors)) {
+                                    uploade_image($_FILES, 'services');
                                     $restult = insert_into_table('services', $data);
                                     if ($restult) {
+                                        unset($data);
                                         $success = '<div class="alert alert-success">Service inserted Succefuly</div>';
                                     } else {
                                         $success = '<div class="alert alert-danger">Service Not Inserted Succefuly</div>';
                                     }
                                 }
                             }
+
                             ?>
                             <?=(! empty($success)) ? $success : ''?>
-                            <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+                            <form action="<?=$_SERVER['PHP_SELF']?>" method="post" enctype="multipart/form-data">
                             <div class="row">
                             <?php $input = "service_name"; ?>
                             <div class="form-group">
@@ -122,6 +143,26 @@
                             </div>       
                             </div>
                             <br>
+                                <div class="row">
+                                    <?php $input = "service_image"; ?>
+                                    <div class="form-group">
+                                        <label for="<?=$input?>" class="col-md-2">Service Image:</label> <?=getError($input); ?>
+                                        <div class="col-md-9">
+                                            <input type="file" name="<?=$input?>" id="<?=$input?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <?php $input = "service_video_link"; ?>
+                                    <div class="form-group">
+                                        <label for="<?=$input?>" class="col-md-2">Service Video Link:</label> <?=getError($input); ?>
+                                        <div class="col-md-9">
+                                            <input type="url" name="<?=$input?>" id="<?=$input?>" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
                             <div class="row">
                             <div class="form-group">
                                 <div class="col-md-2"></div>

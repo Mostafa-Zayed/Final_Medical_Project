@@ -237,53 +237,39 @@
 		<?php foreach ($features as $feature) : ?>
 			<div class="col-lg-3 col-md-6">
 				<div class="single-facilities">
-								<span class="<?=$feature['feature_icon']?>"></span>
-								<a href="#"><h4><?=$feature['feature_name']?></h4></a>
-								<p><?=$feature['feature_description']?></p>
+					<span class="<?=$feature['feature_icon']?>"></span>
+					<a href="#"><h4><?=$feature['feature_name']?></h4></a>
+					<p><?=$feature['feature_description']?></p>
+				</div>
+			</div>
+		<?php endforeach; ?>
+		</div>
+	</div>	
+</section>
+<!-- End facilities Area -->
+
+<!-- Start offered-service Area -->
+<section class="offered-service-area section-gap">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-lg-8 offered-left">
+				<h1 class="text-white">Our Offered Services</h1>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.</p>
+				<div class="service-wrap row">
+				<?php $offers = get_data('offers','where `offer_is_active` = 1','*',2); ?>
+				<?php foreach ($offers as $offer) : ?>
+					<div class="col-lg-6 col-md-6">
+						<div class="single-service">
+							<div class="thumb">
+								<img class="img-fluid" src="<?=UPLOADE_URL.'offers/'.$offer['offer_image']?>" alt="">		
 							</div>
-						</div>
-					<?php endforeach; ?>
-					</div>
-				</div>	
-			</section>
-			<!-- End facilities Area -->
-		
-			<!-- Start offered-service Area -->
-			<section class="offered-service-area section-gap">
-				<div class="container">
-					<div class="row align-items-center">
-						<div class="col-lg-8 offered-left">
-							<h1 class="text-white">Our Offered Services</h1>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.
-							</p>
-							<div class="service-wrap row">
-								<div class="col-lg-6 col-md-6">
-									<div class="single-service">
-										<div class="thumb">
-											<img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/s1.jpg" alt="">		
-										</div>
-										<a href="#">
-											<h4 class="text-white">Cardiac Treatment</h4>
+							<a href="#">
+											<h4 class="text-white"><?=ucfirst($offer['offer_name'])?></h4>
 										</a>	
-										<p>
-											inappropriate behavior Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-										</p>
+										<p><?=$offer['offer_description']?></p>
 									</div>
 								</div>
-								<div class="col-lg-6 col-md-6">
-									<div class="single-service">
-										<div class="thumb">
-											<img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/s2.jpg" alt="">		
-										</div>
-										<a href="#">
-											<h4 class="text-white">Routine Checkup</h4>
-										</a>	
-										<p>
-											inappropriate behavior Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-										</p>
-									</div>
-								</div>								
+							<?php endforeach; ?>
 							</div>
 						</div>
 						<div class="col-lg-4">
@@ -316,20 +302,22 @@
 			</div>
 		</div>
 		<div class="row justify-content-center d-flex align-items-center">
-		<?php $doctors = get_data('doctors', 'where doctor_is_show = 1', 'id,name'); ?>
+		<?php $doctors = get_data('doctors', 'where doctor_is_show = 1'); ?>
 		<?php foreach ($doctors as $doctor): ?>
 		    <div class="col-lg-3 col-md-6 single-team">
 		        <div class="thumb">
-		            <img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/t1.jpg" alt="doctor">
+		            <img class="img-fluid" src="<?=UPLOADE_URL.'doctors/'.$doctor['doctor_image']?>" alt="doctor">
 		            <div class="align-items-end justify-content-center d-flex">
 						<div class="social-links">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
+							<a href="<?=$doctor['doctor_facebook']?>"><i class="fa fa-facebook"></i></a>
+							<a href="<?=$doctor['doctor_twitter']?>"><i class="fa fa-twitter"></i></a>
 							<a href="#"><i class="fa fa-dribbble"></i></a>
 							<a href="#"><i class="fa fa-behance"></i></a>
-						</div>			                        	
-		                <p>inappropriate behavior</p>
-		                <h4>Andy Florence</h4>		                            
+						</div>
+						<?php $doctor_id = $doctor['department_id']; ?>
+						<?php $department = get_one('departments',"`department_id` = '$doctor_id'");?>
+		                <p><?=ucfirst($department['department_name']); ?></p>
+		                <h4><?=ucfirst($doctor['doctor_name'])?></h4>		                            
 		            </div>
 		        </div>
 		    </div>
@@ -352,62 +340,44 @@
 						</div>
 					</div>			
 					<div class="row feedback-contents justify-content-center align-items-center">
-						<div class="col-lg-6 feedback-left relative d-flex justify-content-center align-items-center">
-							<div class="overlay overlay-bg"></div>
-							<a class="play-btn" href="https://www.youtube.com/watch?v=ARA0AxrnHdM"><img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/play-btn.png" alt=""></a>
-						</div>
-						<div class="col-lg-6 feedback-right">
-							<div class="active-review-carusel">
-								<div class="single-feedback-carusel">
-									<img src="<?=WEBSITE_URL?>assets/frontend/img/r1.png" alt="">
-									<div class="title d-flex flex-row">
-										<h4 class="text-white pb-10">Fannie Rowe</h4>
-										<div class="star">
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>								
-										</div>										
-									</div>
-									<p class="text-white">
-										Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-									</p>
-								</div>
-								<div class="single-feedback-carusel">
-									<img src="<?=WEBSITE_URL?>assets/frontend/img/r1.png" alt="">
-									<div class="title d-flex flex-row">
-										<h4 class="text-white pb-10">Fannie Rowe</h4>
-										<div class="star">
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star"></span>								
-										</div>										
-									</div>
-									<p class="text-white">
-										Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-									</p>
-								</div>
-								<div class="single-feedback-carusel">
-									<img src="<?=WEBSITE_URL?>assets/frontend/img/r1.png" alt="">
-									<div class="title d-flex flex-row">
-										<h4 class="text-white pb-10">Fannie Rowe</h4>
-										<div class="star">
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked	"></span>								
-										</div>										
-									</div>
-									<p class="text-white">
-										Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-									</p>
-								</div>																
-							</div>
-						</div>
+                        <?php $item = get_one('doctors','doctor_is_rating = 1'); ?>
+                        <?php if (! empty($item)) : ?>
+                            <?php $column = 'doctor_id'; ?>
+                            <?php $id= $item['doctor_id']; ?>
+                            <div class="col-lg-6 feedback-left relative d-flex justify-content-center align-items-center">
+                                <div class="overlay overlay-bg"></div>
+                                <a class="play-btn" href="<?=$item['doctor_video_link']?>"><img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/play-btn.png" alt=""></a>
+                            </div>
+                        <?php else: ?>
+                            <?php $item = get_one('services','service_is_rating = 1'); ?>
+                            <?php $column = 'service_id'; ?>
+                            <?php $id= $item['service_id']; ?>
+                            <div class="col-lg-6 feedback-left relative d-flex justify-content-center align-items-center">
+                                <div class="overlay overlay-bg"></div>
+                                <a class="play-btn" href="<?=$item['service_video_link']?>"><img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/play-btn.png" alt=""></a>
+                            </div>
+                        <?php endif; ?>
+                        <div class="col-lg-6 feedback-right">
+                            <div class="active-review-carusel">
+                                <?php $feedbacks = get_data('feedbacks',"where `feedback_is_show` = '1' and `$column` = $id"); ?>
+                                <?php foreach ($feedbacks as $feedback) : ?>
+                                    <div class="single-feedback-carusel">
+                                        <div class="title d-flex flex-row">
+                                            <h4 class="text-white pb-10"><?=ucfirst($feedback['feedback_name'])?></h4>
+                                            <div class="star">
+                                                <?php for($i = 0; $i < 5; $i++) : ?>
+                                                <?php $checked = ($i < $feedback['feedback_rate']) ? 'checked' : '' ?>
+                                                <span class="fa fa-star <?=$checked?>"></span>
+                                                <?php endfor; ?>
+                                            </div>
+                                        </div>
+                                        <p class="text-white">
+                                            <?=$feedback['feedback_content']?>
+                                        </p>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
 					</div>
 				</div>	
 			</section>

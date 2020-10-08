@@ -4,13 +4,13 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4><a href="<?=ADMIN_URL?>index">Dashboard</a> / <a href="<?=ADMIN_URL.'feedbacks/view'?>">Feedbacks</a><a href="<?=ADMIN_URL.'feedbacks/add';?>" class="btn btn-primary pull-right">ADD FEEDBACK &nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a></h4>
+                    <h4><a href="<?=ADMIN_URL?>index">Dashboard</a> / <a href="<?=ADMIN_URL.'questions/view'?>"> Questions </a><a href="<?=ADMIN_URL.'questions/add';?>" class="btn btn-primary pull-right">ADD Questions &nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a></h4>
                     <br>
                     <div class="col-lg-12">
                         <div id="message"></div>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Feedbacks</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Questions</h3>
                         </div>
                         <div class="panel-body">
                             <div id="shieldui-grid1"></div>

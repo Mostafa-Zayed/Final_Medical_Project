@@ -30,7 +30,7 @@ $length_constants['page_name'] = 20;
 $length_constants['page_link'] = 20;
 // Departments
 $length_constants['department_name'] = 50;
-$length_constants['department_description'] = 500;
+$length_constants['department_description'] = 700;
 $length_constants['department_image'] = 255;
 // Brands
 $length_constants['brand_name'] = 50;
@@ -46,10 +46,13 @@ $length_constants['doctor_phone'] = 20;
 $length_constants['doctor_address'] = 150;
 $length_constants['doctor_facebook'] = 255;
 $length_constants['doctor_twitter'] = 255;
+$length_constants['doctor_video_link'] = 255;
 $length_constants['doctor_instgram'] = 255;
 $length_constants['hours_servicing_day'] = 50;
 $length_constants['hours_servicing_time'] = 50;
 $length_constants['service_name'] = 100;
+$length_constants['service_video_link'] = 255;
+$length_constants['service_image'] = 255;
 $length_constants['sliderheading'] = 60;
 // Appointments
 $length_constants['appointment_name'] = 50;
@@ -60,8 +63,30 @@ $length_constants['appointment_email'] = 100;
 $length_constants['setting_name'] = 100;
 $length_constants['setting_type'] = 100;
 $length_constants['setting_value'] = 255;
+// Feedbacks
+$length_constants['feedback_name'] = 50;
+$length_constants['feedback_content'] = 300;
+$length_constants['feddback_rate'] = 1;
+//$length_constants['feedback_video_link'] = 255;
+//$length_constants['feedback_image'] = 500;
 //$length_constants['user_email'] = 100;
-
+// Offers
+$length_constants['offer_name'] = 100;
+$length_constants['offer_image'] = 255;
+$length_constants['offer_description'] = 500;
+$length_constants['offer_start_date'] = 255;
+$length_constants['offer_end_date'] = 255;
+// abouts 
+$length_constants['about_heading'] = 255;
+$length_constants['about_slug'] = 150;
+$length_constants['about_title'] = 255;
+$length_constants['about_description'] = 700;
+$length_constants['about_image'] = 255;
+$length_constants['about_video_link'] = 255;
+// Questions
+$length_constants['question_content'] = 255;
+// Answers
+$length_constants['answer_content'] = 500;
 
 foreach ($length_constants as $key => $value) {
 	defined(strtoupper('max_'.$key.'_length')) || define(strtoupper('max_'.$key.'_length'), $value);
@@ -204,6 +229,11 @@ function clean($resource)
         $data = trim(htmlspecialchars($resource));
     }
     return $data;
+}
+
+function is_url(string $value): bool
+{
+    return filter_var($value, FILTER_VALIDATE_URL);
 }
 function pre(array $data)
 {

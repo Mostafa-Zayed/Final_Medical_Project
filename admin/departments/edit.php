@@ -50,7 +50,7 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
                                 } elseif (! is_string_modified($$input)) {
                                     $errors[$input] = 'Must be String';
                                 } elseif (! is_not_more_than($$input, MAX_DEPARTMENT_DESCRIPTION_LENGTH)) {
-                                    $errors[$input] = 'Must be less than '.Max_DEPARTMENT_DESCRIPTION_LENGTH;
+                                    $errors[$input] = 'Must be less than '.MAX_DEPARTMENT_DESCRIPTION_LENGTH;
                                 }
                                 $data[$input] = $$input;
                                 // department_is_active
