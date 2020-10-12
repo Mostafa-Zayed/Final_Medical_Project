@@ -10,7 +10,7 @@
 				<p class="pt-10 pb-10 text-white">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.
 				</p>
-				<a href="#" class="primary-btn text-uppercase">Get Started</a>
+				<a href="<?=WEBSITE_URL?>" class="primary-btn text-uppercase">Get Started</a>
 			</div>										
 		</div>
 	</div>					
@@ -118,44 +118,43 @@
                     $errors[$input] = 'Invalide State Name';
 				}
 				$data[$input] = $$input;
-							// city_id: required
-							$input = 'city_id';
-							$$input = (int) $$input;
-							if (! is_required($$input)) {
-								$errors[$input] = 'Please Select City ';
-							}
-							$check_id = get_data_by_id('cities', $$input, 'id');
-                            if (empty($check_id)) {
-                                $errors[$input] = 'Invalide City Name';
-							}
-							$data[$input] = $$input;
-							// appointment_date: required
-							$input = 'appointment_date';
-							if (! is_required($$input)) {
-								$errors[$input] = 'required';
-							}
-							$data[$input] = $$input;
-							// appointment_message 
-							$input = 'appointment_message';
-							if (isset($$input)) {
-								if (! is_string_modified($$input)) {
-									$errors[$input] = 'Must be String';
-								}
-								$data[$input] = $$input;
-							}
-							if (empty($errors)) {
-								
-								$restult = insert_into_table('appointments', $data);
-                            if ($restult) {
-                                $success = '<div class="alert alert-success">Your Appointment is Sended Succfult Please Wait Us To Confirm Appointment With You</div>';
-                            } else {
-                                echo 'Error';
-                            }
-							}
-						}
-						?>
-						<div class="col-lg-6 col-md-6 appointment-right pt-60 pb-60" id="appointment">
-						<?=! empty($success) ? $success : ''?>
+				// city_id: required
+				$input = 'city_id';
+				$$input = (int) $$input;
+				if (! is_required($$input)) {
+					$errors[$input] = 'Please Select City ';
+				}
+				$check_id = get_data_by_id('cities', $$input, 'id');
+                if (empty($check_id)) {
+                    $errors[$input] = 'Invalide City Name';
+				}
+				$data[$input] = $$input;
+				// appointment_date: required
+				$input = 'appointment_date';
+				if (! is_required($$input)) {
+					$errors[$input] = 'required';
+				}
+				$data[$input] = $$input;
+				// appointment_message 
+				$input = 'appointment_message';
+				if (isset($$input)) {
+					if (! is_string_modified($$input)) {
+						$errors[$input] = 'Must be String';
+					}
+					$data[$input] = $$input;
+				}
+				if (empty($errors)) {			
+					$restult = insert_into_table('appointments', $data);
+                	if ($restult) {
+                    	$success = '<div class="alert alert-success">Your Appointment is Sended Succfult Please Wait Us To Confirm Appointment With You</div>';
+                	} else {
+                    	echo 'Error';
+                	}
+				}
+			}
+			?>
+			<div class="col-lg-6 col-md-6 appointment-right pt-60 pb-60" id="appointment">
+			<?=! empty($success) ? $success : ''?>
 							<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
 								<h3 class="pb-20 text-center mb-30">Book an Appointment</h3>
 								<div class="form-group">		
@@ -238,7 +237,7 @@
 			<div class="col-lg-3 col-md-6">
 				<div class="single-facilities">
 					<span class="<?=$feature['feature_icon']?>"></span>
-					<a href="#"><h4><?=$feature['feature_name']?></h4></a>
+					<a href="<?=WEBSITE_URL?>"><h4><?=$feature['feature_name']?></h4></a>
 					<p><?=$feature['feature_description']?></p>
 				</div>
 			</div>
@@ -263,32 +262,32 @@
 							<div class="thumb">
 								<img class="img-fluid" src="<?=UPLOADE_URL.'offers/'.$offer['offer_image']?>" alt="">		
 							</div>
-							<a href="#">
-											<h4 class="text-white"><?=ucfirst($offer['offer_name'])?></h4>
-										</a>	
-										<p><?=$offer['offer_description']?></p>
-									</div>
-								</div>
-							<?php endforeach; ?>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="offered-right relative">
-								<div class="overlay overlay-bg"></div>
-								<h3 class="relative text-white">Departments</h3>
-								<ul class="relative dep-list">
-									<?php $departments = get_data('departments', 'where department_is_active = 1', 'id,name', '7'); ?>
-									<?php foreach ($departments as $department) : ?>
-										<li><a href="<?=WEBSITE_URL.'?department='.$department['department_id']?>"><?=$department['department_name']?></a></li>
-									<?php endforeach; ?>
-								</ul>
-								<a class="viewall-btn" href="#">View all Department</a>			
-							</div>	
+							<a href="<?=WEBSITE_URL?>">
+								<h4 class="text-white"><?=ucfirst($offer['offer_name'])?></h4>
+							</a>	
+							<p><?=$offer['offer_description']?></p>
 						</div>
 					</div>
+				<?php endforeach; ?>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="offered-right relative">
+					<div class="overlay overlay-bg"></div>
+					<h3 class="relative text-white">Departments</h3>
+					<ul class="relative dep-list">
+					<?php $departments = get_data('departments', 'where department_is_active = 1', 'id,name', '7'); ?>
+					<?php foreach ($departments as $department) : ?>
+						<li><a href="<?=WEBSITE_URL.'?department='.$department['department_id']?>"><?=$department['department_name']?></a></li>
+					<?php endforeach; ?>
+					</ul>
+					<a class="viewall-btn" href="<?=WEBSITE_URL.'departments'?>">View all Department</a>			
 				</div>	
-			</section>
-			<!-- End offered-service Area -->
+			</div>
+		</div>
+	</div>	
+</section>
+<!-- End offered-service Area -->
 		
 <!-- Start team Area -->
 <section class="team-area section-gap">
@@ -327,61 +326,57 @@
 </section>
 <!-- End team Area -->				
 						
-			<!-- Start feedback Area -->
-			<section class="feedback-area section-gap relative">
-				<div class="overlay overlay-bg"></div>
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-md-12 pb-60 header-text text-center">
-							<h1 class="mb-10 text-white">Enjoy our Client’s Feedback</h1>
-							<p class="text-white">
-								Who are in extremely love with eco friendly system..
-							</p>
-						</div>
-					</div>			
-					<div class="row feedback-contents justify-content-center align-items-center">
-                        <?php $item = get_one('doctors','doctor_is_rating = 1'); ?>
-                        <?php if (! empty($item)) : ?>
-                            <?php $column = 'doctor_id'; ?>
-                            <?php $id= $item['doctor_id']; ?>
-                            <div class="col-lg-6 feedback-left relative d-flex justify-content-center align-items-center">
-                                <div class="overlay overlay-bg"></div>
-                                <a class="play-btn" href="<?=$item['doctor_video_link']?>"><img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/play-btn.png" alt=""></a>
-                            </div>
-                        <?php else: ?>
-                            <?php $item = get_one('services','service_is_rating = 1'); ?>
-                            <?php $column = 'service_id'; ?>
-                            <?php $id= $item['service_id']; ?>
-                            <div class="col-lg-6 feedback-left relative d-flex justify-content-center align-items-center">
-                                <div class="overlay overlay-bg"></div>
-                                <a class="play-btn" href="<?=$item['service_video_link']?>"><img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/play-btn.png" alt=""></a>
-                            </div>
-                        <?php endif; ?>
-                        <div class="col-lg-6 feedback-right">
-                            <div class="active-review-carusel">
-                                <?php $feedbacks = get_data('feedbacks',"where `feedback_is_show` = '1' and `$column` = $id"); ?>
-                                <?php foreach ($feedbacks as $feedback) : ?>
-                                    <div class="single-feedback-carusel">
-                                        <div class="title d-flex flex-row">
-                                            <h4 class="text-white pb-10"><?=ucfirst($feedback['feedback_name'])?></h4>
-                                            <div class="star">
-                                                <?php for($i = 0; $i < 5; $i++) : ?>
-                                                <?php $checked = ($i < $feedback['feedback_rate']) ? 'checked' : '' ?>
-                                                <span class="fa fa-star <?=$checked?>"></span>
-                                                <?php endfor; ?>
-                                            </div>
-                                        </div>
-                                        <p class="text-white">
-                                            <?=$feedback['feedback_content']?>
-                                        </p>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-					</div>
-				</div>	
-			</section>
-			<!-- End feedback Area -->	
+<!-- Start feedback Area -->
+<section class="feedback-area section-gap relative">
+	<div class="overlay overlay-bg"></div>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-12 pb-60 header-text text-center">
+				<h1 class="mb-10 text-white">Enjoy our Client’s Feedback</h1>
+				<p class="text-white">Who are in extremely love with eco friendly system..</p>
+			</div>
+		</div>			
+		<div class="row feedback-contents justify-content-center align-items-center">
+        <?php $item = get_one('doctors','doctor_is_rating = 1'); ?>
+        <?php if (! empty($item)) : ?>
+            <?php $column = 'doctor_id'; ?>
+            <?php $id= $item['doctor_id']; ?>
+            <div class="col-lg-6 feedback-left relative d-flex justify-content-center align-items-center">
+                <div class="overlay overlay-bg"></div>
+                <a class="play-btn" href="<?=$item['doctor_video_link']?>"><img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/play-btn.png" alt=""></a>
+            </div>
+        <?php else: ?>
+            <?php $item = get_one('services','service_is_rating = 1'); ?>
+            <?php $column = 'service_id'; ?>
+            <?php $id= $item['service_id']; ?>
+            <div class="col-lg-6 feedback-left relative d-flex justify-content-center align-items-center">
+                <div class="overlay overlay-bg"></div>
+                <a class="play-btn" href="<?=$item['service_video_link']?>"><img class="img-fluid" src="<?=WEBSITE_URL?>assets/frontend/img/play-btn.png" alt=""></a>
+            </div>
+        <?php endif; ?>
+        	<div class="col-lg-6 feedback-right">
+            	<div class="active-review-carusel">
+            	<?php $feedbacks = get_data('feedbacks',"where `feedback_is_show` = '1' and `$column` = '$id'"); ?>	
+            	<?php foreach ($feedbacks as $feedback) : ?>
+                	<div class="single-feedback-carusel">
+                    	<div class="title d-flex flex-row">
+                    		<h4 class="text-white pb-10"><?=ucfirst($feedback['feedback_name'])?></h4>
+                        	<div class="star">
+                        	<?php for($i = 0; $i < 5; $i++) : ?>
+                            	<?php $checked = ($i < $feedback['feedback_rate']) ? 'checked' : '' ?>
+                            	<span class="fa fa-star <?=$checked?>"></span>
+                        	<?php endfor; ?>
+                        	</div>
+                    	</div>
+                    	<p class="text-white"><?=$feedback['feedback_content']?></p>
+                	</div>
+            	<?php endforeach; ?>
+        		</div>
+    		</div>
+		</div>
+	</div>	
+</section>
+<!-- End feedback Area -->	
 
 <!-- Start brands Area -->
 <section class="brands-area">
@@ -399,4 +394,5 @@
 	</div>
 </section>
 <!-- End brands Area -->
+
 <?php include_once INCLUDES."footer.php"; ?>

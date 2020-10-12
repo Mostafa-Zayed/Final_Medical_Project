@@ -17,7 +17,7 @@ if (isset($_GET[$input]) && ! empty($_GET[$input]) && is_numeric($_GET[$input]))
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h4><a href="<?=ADMIN_URL?>index">Dashboard</a> / <a href="<?=ADMIN_URL.$models.'/edit.php?'.$input.'= '.$$input?>"> Update Hours Servicing</a></h4>
+            <h4><a href="<?=ADMIN_URL?>index">Dashboard</a> / <a href="<?=ADMIN_URL.$models.'/view'?>"><?=ucfirst($models)?></a> / <a href="<?=ADMIN_URL.$models.'/edit.php?'.$input.'= '.$$input?>"> Update Hours Servicing</a></h4>
             <br>
                 <div class="panel panel-primary">
                     <div class="panel-heading">

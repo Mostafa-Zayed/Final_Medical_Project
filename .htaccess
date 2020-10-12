@@ -1,14 +1,15 @@
 RewriteEngine on
 
-#AuthType Basic
-#AuthName "Restricted Content"
-#AuthUserFile C:\xampp\htdocs\medical_test\.htpasswd
-#Require valid-user
 RewriteRule ^config.php index.php
 RewriteRule ^globals.php index.php
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php
+
+# # AuthType Basic
+# AuthName "Restricted Content"
+# AuthUserFile C:\xampp\htdocs\medical_test\.htpasswd
+# Require valid-user
 
 
 #ErrorDocument 404 /error.php

@@ -4,7 +4,7 @@ $connection = mysqli_connect(DB_SERVERNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 /**
  * 
  */
-function get_data(string $table_name, string $where = '', string $columns = '*', $limit = ''): array
+function get_data(string $table_name, string $where = '', string $columns = '*', $limit = '')
 {
     global $connection;
     $columns = strip_tags($columns);
